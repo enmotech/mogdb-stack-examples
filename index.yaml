@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  test:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-08-26T18:21:34.828395+08:00"
+    description: A Helm chart for Kubernetes
+    digest: b5660645d1a6ff56cc9f2646324aa778e7ab489c3e00bbadb13fd3b8a52df754
+    name: test
+    type: application
+    urls:
+    - https://enmotech.github.io/mogdb-stack-helm-charts/test-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-08-26T18:21:34.827235+08:00"

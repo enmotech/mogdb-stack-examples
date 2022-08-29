@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   test:
   - apiVersion: v2
+    appVersion: 1.16.2
+    created: "2022-08-29T09:46:42.600076+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 4bfe2e83ce9f5a749f583457cee01e7d9c62d164a7af10e9f337e21832ea6ed3
+    name: test
+    type: application
+    urls:
+    - https://enmotech.github.io/mogdb-stack-helm-charts/test-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 1.16.1
-    created: "2022-08-26T18:49:14.842607+08:00"
+    created: "2022-08-29T09:46:42.599581+08:00"
     description: A Helm chart for Kubernetes
     digest: 6561442d167704a7255926b6fd91ef575193bcde89deb20b8c719139a4c84da2
     name: test
@@ -13,7 +23,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-08-26T18:49:14.842212+08:00"
+    created: "2022-08-29T09:46:42.599108+08:00"
     description: A Helm chart for Kubernetes
     digest: b5660645d1a6ff56cc9f2646324aa778e7ab489c3e00bbadb13fd3b8a52df754
     name: test
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://enmotech.github.io/mogdb-stack-helm-charts/test-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-26T18:49:14.84162+08:00"
+generated: "2022-08-29T09:46:42.596385+08:00"

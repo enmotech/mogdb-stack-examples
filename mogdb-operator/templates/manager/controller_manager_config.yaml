@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.namePrefix }}mgo-config
+  name: {{ .Values.namePrefix }}manager-config
   namespace: {{ .Values.namespace }}
 data:
   controller_manager_config.yaml: |

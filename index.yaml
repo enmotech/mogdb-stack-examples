@@ -3,12 +3,12 @@ entries:
   mogdb-operator-chart:
   - apiVersion: v2
     appVersion: v1.0.0
-    created: "2022-08-31T10:05:38.844123+08:00"
+    created: "2022-08-31T10:23:16.872277+08:00"
     description: A Helm chart for Kubernetes
-    digest: e7945c40cdc142d4c8000518698cdcbd978e23458ede2d746f8698edf399d9a9
+    digest: 126ec449d2d025e73a0df27bdfdfcc18b5eed2114eb3a3f82241b4258ece0a79
     name: mogdb-operator-chart
     type: application
     urls:
     - https://enmotech.github.io/mogdb-stack-helm-charts/mogdb-operator-chart-1.0.0.tgz
     version: 1.0.0
-generated: "2022-08-31T10:05:38.843646+08:00"
+generated: "2022-08-31T10:23:16.871554+08:00"

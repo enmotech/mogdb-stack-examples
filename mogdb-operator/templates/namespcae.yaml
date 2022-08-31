@@ -1,6 +1,9 @@
+{{- $top := . }}
+{{- range $namespace := .Values.namespaces -}}
 apiVersion: v1
 kind: Namespace
 metadata:
   labels:
     control-plane: controller-manager
-  name: {{ .Values.namespace }}
+  name: {{ $namespace }}
+{{ end -}}

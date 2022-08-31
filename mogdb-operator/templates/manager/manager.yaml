@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.namePrefix }}controller-manager
-  namespace: system
+  namespace: {{ .Values.namespace }}
   labels:
     control-plane: controller-manager
 spec:

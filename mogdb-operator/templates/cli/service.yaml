@@ -1,0 +1,19 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mogdb-apiserver
+  labels:
+    name: mogdb-apiserver
+    vendor: enmotech
+spec:
+  ports:
+    - name: apiserver
+      protocol: TCP
+      port: 8444
+      targetPort: 8444
+      nodePort: {{ .Values.apiServerPort }}
+  selector:
+    name: mogdb-apiserver
+  type: NodePort
+  sessionAffinity: None

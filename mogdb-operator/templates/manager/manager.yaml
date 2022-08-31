@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: {{ .Values.namespace }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.namePrefix }}controller-manager
+  namespace: system
+  labels:
+    control-plane: controller-manager
+spec:
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        control-plane: controller-manager
+    spec:
+      securityContext:
+        # runAsNonRoot: true
+        runAsNonRoot: false
+      containers:
+      - command:
+        - /usr/local/bin/mogdb-operator
+        args:
+        - --leader-elect
+        env:
+          - name: MOG_OPERATOR_NAMESPACE
+            value: {{ .Values.namespace }}
+        image: {{ .Values.image.apiRepository }}:{{ .Chart.AppVersion }}
+        name: manager
+        securityContext:
+          allowPrivilegeEscalation: false
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 100m
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+      serviceAccountName: {{ .Values.namePrefix }}controller-manager
+      terminationGracePeriodSeconds: 10
+      imagePullSecrets:
+        - name: {{ .Values.namePrefix }}huawei-registry

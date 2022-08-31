@@ -1,0 +1,15 @@
+# Default values for mogdb-operator-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: mogdb-operator-system
+
+namePrefix: mogdb-operator-
+
+image:
+  apiRepository: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-apiserver
+  managerRepository: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator
+  pullPolicy: IfNotPresent
+
+apiServerPort: 32444
+

@@ -66,4 +66,4 @@ spec:
             sizeLimit: 16Mi
 
       imagePullSecrets:
-        - name: mogdb-operator-huawei-registry
+        - name: {{ .Values.namePrefix }}huawei-registry

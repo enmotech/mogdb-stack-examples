@@ -26,7 +26,7 @@ spec:
         env:
           - name: MOG_OPERATOR_NAMESPACE
             value: {{ .Values.namespace }}
-        image: {{ .Values.image.apiRepository }}:{{ .Chart.AppVersion }}
+        image: {{ .Values.image.managerRepository }}:{{ .Chart.AppVersion }}
         name: manager
         securityContext:
           allowPrivilegeEscalation: false

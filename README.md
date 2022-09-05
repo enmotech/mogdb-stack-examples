@@ -1,6 +1,7 @@
 # mogdb-stack-helm-charts
 mogdb-stack-helm-charts
 
+**Keep helm version >= 3.2**
 
 ## add repo
 

@@ -21,11 +21,11 @@ helm search repo mogdb-chart -l
 
 ## first install
 
-root helm install mogdb mogdb-chart/mogdb-operator-chart --namespace mogdb-operator-system --create-namespace
+helm install mogdb mogdb-chart/mogdb-operator-chart --namespace mogdb-operator-system --create-namespace
 
 ## install
 
-root helm install mogdb mogdb-chart/mogdb-operator-chart --namespace mogdb-operator-system
+helm install mogdb mogdb-chart/mogdb-operator-chart --namespace mogdb-operator-system
 
 ## upgrade
 

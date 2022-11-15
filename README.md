@@ -45,7 +45,7 @@ helm install mogdb mogdb-chart/mogdb-operator-chart --namespace mogdb-operator-s
 helm list
 ```
 
-## 升级到最新版本吧
+## 升级到最新版本
 
 ```
 helm upgrade mogdb mogdb-chart/mogdb-operator-chart

@@ -20,7 +20,7 @@ spec:
       serviceAccountName: mogdb-apiserver
       containers:
         - name: apiserver
-          image: {{ .Values.image.apiRepository }}:{{ .Chart.AppVersion }}
+          image: {{ .Values.image.apiRepository }}:{{ .Values.image.apiTag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             allowPrivilegeEscalation: false

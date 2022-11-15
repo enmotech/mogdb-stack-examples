@@ -31,31 +31,90 @@ spec:
           spec:
             description: MogdbBackupSpec defines the desired state of MogdbBackup
             properties:
-              backupScheduleJobsHistoryLimit:
-                description: If set keeps last BackupScheduleJobsHistoryLimit Backups
-                type: integer
-              backupSecretName:
-                description: BackupSecretName the name of secrets that contains the credentials to access the bucket. Default is used the secret specified in cluster.
-                type: string
-              backupURL:
-                description: BackupURL represents the URL to the backup location, this can be partially specifyied. Default is used the one specified in the cluster.
-                type: string
+              baseBackup:
+                description: once backup for base backup. This updates base backup filed Defaults to nil
+                properties:
+                  backupLevel:
+                    type: string
+                  dbName:
+                    description: DbName represents the database name for backup.
+                    type: string
+                  fileName:
+                    type: string
+                  name:
+                    type: string
+                  s3:
+                    description: The S3 storage Defaults to nil
+                    properties:
+                      backupSecretName:
+                        description: BackupSecretName the name of secrets that contains the credentials to access the bucket. Default is used the secret specified in cluster.
+                        type: string
+                      bucket:
+                        description: The S3 bucket utilized for the repository
+                        type: string
+                      endPoint:
+                        type: string
+                      provider:
+                        type: string
+                      secretName:
+                        type: string
+                    type: object
+                  tbNames:
+                    description: TbNames represents the table names for backup.
+                    items:
+                      type: string
+                    type: array
+                required:
+                - backupLevel
+                - fileName
+                - name
+                type: object
               clusterName:
                 description: ClusterName represents the cluster for which to take backup
                 type: string
-              dbName:
-                description: DbName represents the database name for backup.
+              dumpAll:
+                description: once backup for dump all. This updates dump all filed Defaults to nil
+                properties:
+                  backupLevel:
+                    type: string
+                  dbName:
+                    description: DbName represents the database name for backup.
+                    type: string
+                  fileName:
+                    type: string
+                  name:
+                    type: string
+                  s3:
+                    description: The S3 storage Defaults to nil
+                    properties:
+                      backupSecretName:
+                        description: BackupSecretName the name of secrets that contains the credentials to access the bucket. Default is used the secret specified in cluster.
+                        type: string
+                      bucket:
+                        description: The S3 bucket utilized for the repository
+                        type: string
+                      endPoint:
+                        type: string
+                      provider:
+                        type: string
+                      secretName:
+                        type: string
+                    type: object
+                  tbNames:
+                    description: TbNames represents the table names for backup.
+                    items:
+                      type: string
+                    type: array
+                required:
+                - backupLevel
+                - fileName
+                - name
+                type: object
+              image:
                 type: string
-              remoteDeletePolicy:
-                description: RemoteDeletePolicy the deletion policy that specify how to treat the data from remote storage. By default it's used softDelete.
-                type: string
-              tbNames:
-                description: TbNames represents the table names for backup.
-                items:
-                  type: string
-                type: array
             required:
             - clusterName
+            - image
             type: object
           status:
             description: MogdbBackupStatus defines the observed state of MogdbBackup

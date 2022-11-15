@@ -10,6 +10,8 @@ image:
   apiRepository: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-apiserver
   managerRepository: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator
   pullPolicy: IfNotPresent
+  apiTag: latest
+  managerTag: latest
 
 apiServerPort: 32444
 

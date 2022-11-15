@@ -69,11 +69,11 @@ helm rollback mogdb [RELEASE REVISION]
 - 修改 mogdb-operator/Chart.yaml 文件中的 version 值为一个新的 chart 版本 tag
 - 检查需要新打包tag语法
     ```
-    helm lint --strict mogdb-operator-chart
+    helm lint --strict mogdb-operator
     ```
 - 打包
     ```
-    helm package mogdb-operator-chart/
+    helm package mogdb-operator/
     ```
 - 将新打的包添加到索引文件
     ```

@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: prometheus
+
+  namespace: monitoring
+
+  labels:
+
+    app: prometheus
+
+spec:
+
+  replicas: 1
+
+  revisionHistoryLimit: 2 # how many old ReplicaSets for this Deployment you want to retain, https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#clean-up-policy
+
+  selector:
+
+    matchLabels:
+
+      app: prometheus
+
+  minReadySeconds: 0
+
+  strategy:
+
+    type: RollingUpdate
+
+    rollingUpdate:
+
+      maxUnavailable: 1
+
+      maxSurge: 1
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: prometheus
+
+    spec:
+
+      serviceAccountName: prometheus
+
+      containers:
+
+        - name: prometheus
+          image: prom/prometheus
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/prometheus"
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/prometheus"
+            - "--storage.tsdb.retention=24h"
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/prometheus"
+              name: data
+            - mountPath: "/etc/prometheus"
+              name: config
+
+        - name: alertmanager
+          image: prom/alertmanager:v0.17.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--config.file=/etc/alertmanager/config.yml"
+          ports:
+            - containerPort: 9093
+              name: http
+          volumeMounts:
+            - mountPath: "/etc/alertmanager"
+              name: alertcfg
+            #自定义告警模板
+            - name: config-template-volume
+              mountPath: /etc/config/template
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+      volumes:
+        - name: data
+          emptyDir: { }
+        - name: config
+          configMap:
+            name: prometheus-config
+        - name: alertcfg
+          configMap:
+            name: alert-config
+        - name: config-template-volume
+          configMap:
+            name: alertmanager-template-volume
+
+

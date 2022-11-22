@@ -8,6 +8,8 @@ image:
   pullPolicy: IfNotPresent
   kubeStateMetricsRepository: k8s.gcr.io/kube-state-metrics/kube-state-metrics
   kubeStateMetricsTag: 2.4.2
+  alertmanagerRepository: prom/alertmanager
+  alertmanagerTag: 0.17.0
 
 grafanaNodeport: 41043
 prometheusNodeport: 41042

@@ -21,7 +21,7 @@ spec:
     spec:
       automountServiceAccountToken: true
       containers:
-      - image: {{ .Values.image.kubeStateMetricsRepository }}:{{ .Values.image.kubeStateMetricsTag }}
+      - image: {{ .Values.image.kubeStateMetricsRepository }}:v{{ .Values.image.kubeStateMetricsTag }}
         livenessProbe:
           httpGet:
             path: /healthz

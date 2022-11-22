@@ -7,7 +7,7 @@ namespace: monitoring
 image:
   pullPolicy: IfNotPresent
   kubeStateMetricsRepository: k8s.gcr.io/kube-state-metrics/kube-state-metrics
-  kubeStateMetricsTag: v2.4.2
+  kubeStateMetricsTag: 2.4.2
 
 grafanaNodeport: 41043
 prometheusNodeport: 41042

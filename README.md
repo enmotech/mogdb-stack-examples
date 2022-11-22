@@ -30,13 +30,13 @@ helm search repo mogdb-chart -l
 ## 第一次安装（连同创建命名空间）
 
 ```
-helm install mogdb mogdb-chart/mogdb-operator-chart --namespace mogdb-operator-system --create-namespace
+helm install mogdb mogdb-chart/mogdb-operator --namespace mogdb-operator-system --create-namespace
 ```
 
 ## 安装
 
 ```
-helm install mogdb mogdb-chart/mogdb-operator-chart --namespace mogdb-operator-system
+helm install mogdb mogdb-chart/mogdb-operator --namespace mogdb-operator-system
 ```
 
 ## 列举发布版本
@@ -48,13 +48,13 @@ helm list
 ## 升级到最新版本
 
 ```
-helm upgrade mogdb mogdb-chart/mogdb-operator-chart
+helm upgrade mogdb mogdb-chart/mogdb-operator
 ```
 
 ## 升级到指定版本
 
 ```
-helm upgrade mogdb mogdb-chart/mogdb-operator-chart --version=*****
+helm upgrade mogdb mogdb-chart/mogdb-operator --version=*****
 ```
 
 ## 回滚到某个chart版本

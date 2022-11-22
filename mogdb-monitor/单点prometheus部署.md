@@ -207,18 +207,18 @@ $ kubectl create -f .
 
 * 打开<ip地址>:31000,验证prometheus是否拿到监控指标，如图所示：在status->targets 可观察到监控目标，状态为"up"说明拿到监控指标
 
-![avatar](./img/prometheus_success.png)
+![avatar](templates/img/prometheus_success.png)
 
 
 * 或者在Graph中查询各监控指标数据
 
-![avatar](./img/img.png)
+![avatar](templates/img/img.png)
 
-![avatar](./img/img_1.png)
+![avatar](templates/img/img_1.png)
 
 ###2、验证grafana
 
 * 打开<ip地址>:32000，显示prafana登陆界面，输入默认账号密码：admin/admin，添加数据源，选择prometheus，填写URL：<ip地址>:32000
 * 在 https://grafana.com/grafana/dashboards/ 中可搜索各监控指标的dashboard,导入dashboard后可观察界面
 
-![avatar](./img/img_2.png)
+![avatar](templates/img/img_2.png)

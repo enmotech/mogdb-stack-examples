@@ -6,7 +6,7 @@ metadata:
 
   name: prometheus
 
-  namespace: monitoring
+  namespace: {{ .Values.namespace }}
 
 
 
@@ -80,6 +80,6 @@ subjects:
 
     name: prometheus
 
-    namespace: monitoring
+    namespace: {{ .Values.namespace }}
 
 

@@ -1,0 +1,19 @@
+# Default values for mogdb-monitor.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: monitoring
+
+image:
+  pullPolicy: IfNotPresent
+  kubeStateMetricsRepository: k8s.gcr.io/kube-state-metrics/kube-state-metrics
+  kubeStateMetricsTag: v2.4.2
+
+grafanaNodeport: 41043
+prometheusNodeport: 41042
+alertmanagerNodeport: 41044
+
+alertEmailHost: 163.com
+alertEmailSmtp: smtp.163.com:25
+alertEmailUsername: ych_1024@163.com
+alertEmailPassword: <邮箱密码>

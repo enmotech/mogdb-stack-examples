@@ -2,10 +2,10 @@ apiVersion: v1
 entries:
   mogdb-monitor:
   - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-11-22T10:44:19.582425+08:00"
+    appVersion: 0.1.0
+    created: "2022-11-22T10:55:13.194213+08:00"
     description: A Helm chart for Kubernetes
-    digest: 7561f6275508e3cd8d17a24ac80bc21f04b7b8b1590a3736c7ee2bd731684ead
+    digest: eb99a51cb2b20e940b99a40206dbcc1e1ee3c797fbc72a4f6125b3940cfcdcc7
     name: mogdb-monitor
     type: application
     urls:
@@ -14,7 +14,7 @@ entries:
   mogdb-operator:
   - apiVersion: v2
     appVersion: latest
-    created: "2022-11-22T10:44:19.585493+08:00"
+    created: "2022-11-22T10:55:13.196628+08:00"
     description: A Helm chart for Kubernetes
     digest: 3eadf0509cc6d7176a894369893c92595e3154da74a862776dc0447d599e8ca0
     name: mogdb-operator
@@ -24,7 +24,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: latest
-    created: "2022-11-22T10:44:19.584031+08:00"
+    created: "2022-11-22T10:55:13.195443+08:00"
     description: A Helm chart for Kubernetes
     digest: 24ffefd49432ca9e9f4b58c1aeca31b08578677cf1be9f640f4b0deeeea8d0a3
     name: mogdb-operator
@@ -32,4 +32,4 @@ entries:
     urls:
     - https://enmotech.github.io/mogdb-stack-helm-charts/mogdb-operator-1.0.0.tgz
     version: 1.0.0
-generated: "2022-11-22T10:44:19.581014+08:00"
+generated: "2022-11-22T10:55:13.192336+08:00"

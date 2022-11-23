@@ -29,7 +29,7 @@ data:
       repeat_interval: 5m
 
       # 默认的receiver：如果一个报警没有被一个route匹配，则发送给默认的接收器
-      receiver: mail
+      receiver: default
 
       # 上面所有的属性都由所有子路由继承，并且可以在每个子路由上进行覆盖。
       routes:

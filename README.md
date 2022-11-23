@@ -12,7 +12,7 @@ helm repo add mogdb-chart https://enmotech.github.io/mogdb-stack-helm-charts
 ## 更新仓库
 
 ```
-helm repo update mogdb-chart\
+helm repo update mogdb-chart
 ```
 
 ## 查询目标仓库最新chart版本

@@ -19,3 +19,5 @@ alertEmailHost: 163.com
 alertEmailSmtp: smtp.163.com:25
 alertEmailUsername: ych_1024@163.com
 alertEmailPassword: <邮箱密码>
+
+receiversEmail: xxx@qq.com  #多个邮箱用逗号隔开

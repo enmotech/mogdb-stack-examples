@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.namePrefix }}mgo-config
-  namespace: {{ .Values.namespace }}
+  name: {{ .Values.namePrefix }}global-config
 data:
-  rclone.conf: |
-    [backup]
-    type = s3
-    provider = Minio
-    env_auth = false
-    access_key_id = root
-    secret_access_key = root@123
-    endpoint = http://10.1.193.125:9000
+  config.json: |
+    {
+      "operatorName": "",
+      "imageNamePairs": [
+        {"name": "RELATED_IMAGE_BACKUP", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-command:v1.0.1"},
+        {"name": "RELATED_IMAGE_RESTORE", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-command:v1.0.1"}
+      ],
+      "haServices": ["http://127.0.0.1:8080"]
+    }

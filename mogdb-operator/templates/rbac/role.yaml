@@ -6,112 +6,112 @@ metadata:
   creationTimestamp: null
   name: {{ .Values.namePrefix }}manager-role
 rules:
-- apiGroups:
-  - batch
-  resources:
-  - jobs
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  - events
-  - persistentvolumeclaims
-  - persistentvolumes
-  - pods
-  - pods/exec
-  - secrets
-  - services
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbbackups
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbbackups/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbbackups/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbclusters
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbclusters/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbclusters/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbrecoveries
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbrecoveries/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - mogdb.enmotech.io
-  resources:
-  - mogdbrecoveries/status
-  verbs:
-  - get
-  - patch
-  - update
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - events
+      - persistentvolumeclaims
+      - persistentvolumes
+      - pods
+      - pods/exec
+      - secrets
+      - services
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+      - serviceaccounts
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbbackups
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbbackups/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbbackups/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbclusters
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbclusters/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbclusters/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - rolebindings
+      - roles
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch

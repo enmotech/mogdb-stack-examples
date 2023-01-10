@@ -1,0 +1,59 @@
+# Default values for mogdb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+clusterName: cluster1
+nameSpace: mogdb-operator-system
+
+replicaCount: 2
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
+
+singleNamespace: true
+
+readPort: 30012
+writePort: 30013
+
+enableHa: false
+
+backup: {}
+#backup:
+#  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:arm64-2.0.0
+#  baseBackup:
+#    name: base-backup
+#    backupSchedules:
+#      full: "0 */10 * * * ?"
+#    backupScheduleHistoryLimit: 7
+#    s3:
+#      secretName: s3-creds
+#      provider: Minio
+#      endPoint: http://10.101.90.25:9000
+#      bucket: backup
+
+restore: {}
+#restore:
+#  restoreId: a
+#  dataSource:
+#    clusterName: cluster1
+#    baseBackupSource:
+#      type: object
+#      target: cluster1-auto-2022-12-12t08-50-00-547zp
+
+
+images:
+  pullPolicy: IfNotPresent
+  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:arm64-3.0.0
+  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:arm64-3.0.0
+  exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:latest
+
+volume:
+  storageClass: local-path
+  dataStorageSize: 1Gi
+  logStorageSize: 1Gi
+  backupStorageSize: 1Gi

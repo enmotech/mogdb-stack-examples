@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "install.managerName" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "install.labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "install.labels" . | indent 8 }}
+    spec:
+      serviceAccountName: {{ include "install.serviceAccountName" . }}
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: etcd
+          image: {{ .Values.images.etcd }}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/etcd
+          ports:
+            - name: client
+              containerPort: 2379
+            - name: peer
+              containerPort: 2380
+          {{- if .Values.resources.etcd }}
+          resources:
+          {{- toYaml .Values.resources.etcd | nindent 12 }}
+          {{- end }}
+        - name: mogha
+          image: {{ .Values.images.mogha }}
+          args:
+            - --debug={{ .Values.debug }}
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+          command:
+            - /usr/local/bin/mogdb-ha
+          ports:
+            - containerPort: 6544
+              name: api
+          {{- if .Values.resources.mogha }}
+          resources:
+          {{- toYaml .Values.resources.mogha | nindent 12 }}
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: 6544
+              scheme: HTTP
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            initialDelaySeconds: 10
+          livenessProbe:
+            httpGet:
+              path: "/"
+              port: 6544
+              scheme: HTTP
+            periodSeconds: 30
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            initialDelaySeconds: 60
+      {{- include "install.imagePullSecrets" . | nindent 6 }}

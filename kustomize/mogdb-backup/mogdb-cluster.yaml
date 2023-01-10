@@ -1,0 +1,50 @@
+apiVersion: mogdb.enmotech.io/v1
+kind: MogdbCluster
+metadata:
+  name: cluster1
+  namespace: mogdb-operator-system
+spec:
+  # Add fields here
+  podSpec:
+    volumeSpec:
+      persistentVolumeClaim:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 1Gi
+    logVolumeSpec:
+      persistentVolumeClaim:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 1Gi
+    backupVolumeSpec:
+      persistentVolumeClaim:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 1Gi
+    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:arm64-3.0.0
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:arm64-3.0.0
+    exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:v3.0.0
+  readPort: 30012
+  writePort: 30013
+  replicas: 2
+  backup:
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:arm64-2.0.0
+    baseBackup:
+      name: base-backup
+      backupSchedules:
+        full: "0 */10 * * * ?"
+      backupScheduleHistoryLimit: 7
+      s3:
+        secretName: s3-creds
+        provider: Minio
+        endPoint: http://10.101.90.25:9000
+        bucket: backup

@@ -1,0 +1,7 @@
+namespace: monitoring
+
+bases:
+  - ./kube-state-metrics
+  - ./kubernetes-node-exporter
+  - ./prometheus
+  - ./grafana

@@ -1,0 +1,5 @@
+resources:
+  - prometheus-config.yaml
+  - prometheus-deploy.yaml
+  - prometheus-rbac.yaml
+  - prometheus-service.yaml

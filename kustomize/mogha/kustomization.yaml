@@ -1,0 +1,28 @@
+# Adds namespace to all resources.
+namespace: mogha
+
+resources:
+  - bases/cluster_role.yaml
+  - bases/cluster_role_binding.yaml
+  - bases/deployment.yaml
+  - bases/service.yaml
+  - bases/service_account.yaml
+  - bases/secret.yaml
+
+images:
+  - name: etcd
+    newName: registry.cn-hangzhou.aliyuncs.com/google_containers/etcd
+    newTag: 3.5.0-0
+  - name: mogha
+    newName: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha
+    newTag: latest
+
+
+patchesStrategicMerge:
+  # ---- important ----
+  # if you do not want a simple install,
+  # comment the `patches/deployment-container-etcd.yaml` line to avoid install etcd with mogha in the same pod,
+  # and modify patch file `patches/deployment-container-mogha.yaml` to pass some etcd related configuration.
+  # ---- important ----
+  - patches/deployment-container-etcd.yaml
+  - patches/deployment-container-mogha.yaml

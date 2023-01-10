@@ -1,0 +1,69 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mogdb-apiserver
+  labels:
+    vendor: enmotech
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mogdb-apiserver
+      vendor: enmotech
+  template:
+    metadata:
+      labels:
+        name: mogdb-apiserver
+        vendor: enmotech
+    spec:
+      serviceAccountName: mogdb-apiserver
+      containers:
+        - name: apiserver
+          image: apiserver:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 8444
+              name: api
+          readinessProbe:
+            httpGet:
+              path: "/healthz"
+              port: 8444
+              scheme: HTTPS
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: "/healthz"
+              port: 8444
+              scheme: HTTPS
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          env:
+            - name: CRUNCHY_DEBUG
+              value: 'true'
+            - name: PORT
+              value: '8444'
+            - name: NAMESPACE
+              value: $(NAMESPACE)
+            - name: MGO_OPERATOR_NAMESPACE
+              value: $(NAMESPACE)
+            - name: DISABLE_TLS
+              value: 'false'
+            - name: ADD_OS_TRUSTSTORE
+              value: 'false'
+          volumeMounts:
+            - mountPath: "/tmp"
+              name: tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 16Mi
+
+      imagePullSecrets:
+        - name: mogdb-operator-huawei-registry

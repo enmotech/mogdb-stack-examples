@@ -1,0 +1,13 @@
+apiVersion: v1
+stringData:
+  password: password
+  username: admin
+  roles: admin
+kind: Secret
+metadata:
+  labels:
+    {{- include "install.userSecretLabels" . | indent 4 }}
+    {{- include "install.labels" . | indent 4 }}
+  name: {{ include "install.userSecretName" . }}
+type: Opaque
+

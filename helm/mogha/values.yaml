@@ -1,0 +1,30 @@
+singleNamespace: false
+
+debug: false
+
+imagePullSecrets: {}
+
+imagePullSecretNames: []
+
+resources:
+  etcd:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 500m
+      memory: 500Mi
+  mogha:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 500m
+      memory: 500Mi
+
+
+images:
+  pullPolicy: IfNotPresent
+  mogha: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha:latest
+  etcd: registry.cn-hangzhou.aliyuncs.com/google_containers/etcd:3.5.0-0
+

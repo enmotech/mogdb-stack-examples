@@ -1,0 +1,24 @@
+# Default values for mogdb-operator-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 200Mi
+  requests:
+    cpu: 100m
+    memory: 100Mi
+
+imagePullPolicy: IfNotPresent
+
+imagePullSecrets: {}
+
+imagePullSecretNames: []
+
+singleNamespace: false
+
+controllerImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator:arm64-2.0.0
+
+haService: http://mogdb-ha.mogha.svc.cluster.local:6544
+

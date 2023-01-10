@@ -1,0 +1,12 @@
+apiServerPort: 32444
+
+singleNamespace: false
+
+apiserverImages: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-apiserver:arm64-2.0.0
+
+imagePullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: mogdb-operator-huawei-registry
+
+imagePullSecretNames: []

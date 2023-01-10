@@ -1,0 +1,58 @@
+apiVersion: v1
+entries:
+  mogdb-apiserver:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-01-10T11:28:43.996711971+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 2bea534d8fb8f25bab761a1493f9e3d8fc246d0076f733c1fa139d78b7ff0dd1
+    name: mogdb-apiserver
+    type: application
+    urls:
+    - mogdb-apiserver.tgz
+    version: 2.0.0
+  mogdb-cluster:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-01-10T11:28:43.997091967+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 30bc4d001a786a48f1ff7960a6d85304efbac01aeea870ae13216e8363062051
+    name: mogdb-cluster
+    type: application
+    urls:
+    - mogdb-cluster.tgz
+    version: 2.0.0
+  mogdb-monitor:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-01-10T11:28:43.998199665+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 76d31a8a7bfa3b37071a890bdb4a4cb50baa3a395b1dc8bc0b28152284029e61
+    name: mogdb-monitor
+    type: application
+    urls:
+    - mogdb-monitor.tgz
+    version: 2.0.0
+  mogdb-operator:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-01-10T11:28:43.99977315+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 50342760a3fb1cc6a98e93c7472c6a5661f0124528d972a2bfa31dad52e1d421
+    name: mogdb-operator
+    type: application
+    urls:
+    - mogdb-operator-2.0.0.tgz
+    version: 2.0.0
+  mogha:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-01-10T11:28:44.000051231+08:00"
+    description: A Helm chart for Kubernetes
+    digest: db0b39438b86dc6a994c663568f1107df84b2b0184c179f0b6c644d68a27bfdb
+    name: mogha
+    type: application
+    urls:
+    - mogha.tgz
+    version: 2.0.0
+generated: "2023-01-10T11:28:43.996215392+08:00"

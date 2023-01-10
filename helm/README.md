@@ -1,3 +1,34 @@
+# MogDB Stack安装
+
+## 第1步: 安装MogDB Operator
+
+部署MogDB Operator的过程分为两步:
+
+1.安装MogDB Operator CRDs
+2.安装MogDB Operator
+
+### 安装MogDB Operator CRDs
+
+MogDB Operator包含许多自定义的资源类型(CRDs)。执行以下命令安装CRD到Kubernetes集群中:
+
+```shell
+kubectl 
+```
+
+### MogDB Operator安装
+
+### Mogha安装
+
+### apiserver安装
+
+### 监控安装
+
+### 集群创建
+
+
+
+
+
 # mogdb-stack-helm-charts
 mogdb-stack-helm-charts
 

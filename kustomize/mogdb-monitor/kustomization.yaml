@@ -1,7 +1,17 @@
-namespace: monitoring
+namespace: monitor
 
 bases:
   - ./kube-state-metrics
   - ./kubernetes-node-exporter
   - ./prometheus
   - ./grafana
+  - ./alertmanager
+
+vars:
+  - name: NAMESPACE
+    objref:
+      kind: Namespace
+      name: system
+      apiVersion: v1
+    fieldref:
+      fieldpath: metadata.name

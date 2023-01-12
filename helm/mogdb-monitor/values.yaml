@@ -2,8 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-namespace: monitoring # 命名空间
-
 image:
   pullPolicy: IfNotPresent # 镜像拉取策略
   kubeStateMetricsRepository: k8s.gcr.io/kube-state-metrics/kube-state-metrics # kube-state-metrics 镜像仓库

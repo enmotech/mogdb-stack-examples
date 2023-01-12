@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: node-exporter
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
   annotations:
       prometheus.io/scrape: 'true'
       prometheus.io/port:   '9100'

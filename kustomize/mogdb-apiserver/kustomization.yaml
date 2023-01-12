@@ -1,3 +1,5 @@
+namespace: mogdb-operator-system
+
 resources:
   - cluster-role-bindings.yaml
   - cluster-roles.yaml

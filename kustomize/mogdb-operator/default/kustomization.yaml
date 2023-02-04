@@ -27,7 +27,7 @@ bases:
 images:
   - name: controller
     newName: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator
-    newTag: arm64-2.0.0
+    newTag: 2.0.0
 
 patchesStrategicMerge:
   # Protect the /metrics endpoint by putting it behind auth.

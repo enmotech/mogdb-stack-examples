@@ -4,7 +4,7 @@ metadata:
   name: cluster1-backup
 spec:
   clusterName: cluster1
-  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:arm64-2.0.0
+  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:2.0.0
   baseBackup:
     name: "baseBackup"
     backupLevel: full

@@ -30,14 +30,14 @@ spec:
         resources:
           requests:
             storage: 1Gi
-    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:arm64-3.0.0
-    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:arm64-3.0.0
-    exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:v3.0.0
+    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:3.0.3
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.3
+    exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
   readPort: 30012
   writePort: 30013
   replicas: 2
   backup:
-    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:arm64-2.0.0
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:2.0.0
     baseBackup:
       name: base-backup
       backupSchedules:

@@ -48,9 +48,9 @@ restore: {}
 
 images:
   pullPolicy: IfNotPresent
-  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:arm64-3.0.0
-  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:arm64-3.0.0
-  exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:latest
+  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:3.0.3
+  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.3
+  exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
 
 volume:
   storageClass: local-path

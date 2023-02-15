@@ -55,5 +55,4 @@ images:
 volume:
   storageClass: local-path
   dataStorageSize: 1Gi
-  logStorageSize: 1Gi
   backupStorageSize: 1Gi

@@ -6,20 +6,20 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.5.0
   creationTimestamp: null
-  name: mogdbclusters.mogdb.enmotech.io
+  name: mogdbclustertemplates.mogdb.enmotech.io
 spec:
   group: mogdb.enmotech.io
   names:
-    kind: MogdbCluster
-    listKind: MogdbClusterList
-    plural: mogdbclusters
-    singular: mogdbcluster
+    kind: MogdbClusterTemplate
+    listKind: MogdbClusterTemplateList
+    plural: mogdbclustertemplates
+    singular: mogdbclustertemplate
   scope: Namespaced
   versions:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: MogdbCluster is the Schema for the Mogdbclusters API
+        description: MogdbClusterTemplate defines MogdbCluster template
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'

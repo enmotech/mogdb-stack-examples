@@ -86,10 +86,10 @@ data:
       - name: test-rule
         rules:
           - alert: NodeMemoryUsage
-            expr: (node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes)) / node_memory_MemTotal_bytes * 100 > 10
+            expr: (node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes)) / node_memory_MemTotal_bytes * 100 > 60
             for: 2m
             labels:
               team: node
             annotations:
               summary: "High Memory usage detected"
-              description: "Memory usage is above 10% "
+              description: "Memory usage is above 60% "

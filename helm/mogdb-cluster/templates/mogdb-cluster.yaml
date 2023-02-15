@@ -25,14 +25,6 @@ spec:
     resources:
     {{- toYaml .Values.resources | nindent 6 }}
     {{- end }}
-    logVolumeSpec:
-      persistentVolumeClaim:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: {{ .Values.volume.logStorageSize }}
-        storageClassName: {{ .Values.volume.storageClass }}
     volumeSpec:
       persistentVolumeClaim:
         accessModes:

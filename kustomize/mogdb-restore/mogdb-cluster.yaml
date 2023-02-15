@@ -14,14 +14,6 @@ spec:
         resources:
           requests:
             storage: 1Gi
-    logVolumeSpec:
-      persistentVolumeClaim:
-        accessModes:
-          - ReadWriteOnce
-        storageClassName: local-path
-        resources:
-          requests:
-            storage: 1Gi
     backupVolumeSpec:
       persistentVolumeClaim:
         accessModes:

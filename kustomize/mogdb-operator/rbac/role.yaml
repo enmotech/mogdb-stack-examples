@@ -103,6 +103,30 @@ rules:
   - patch
   - update
 - apiGroups:
+  - mogdb.enmotech.io
+  resources:
+  - mogdbclustertemplates
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - mogdb.enmotech.io
+  resources:
+  - mogdbpodtemplates
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
   - rbac.authorization.k8s.io
   resources:
   - rolebindings

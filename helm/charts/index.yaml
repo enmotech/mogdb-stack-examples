@@ -3,42 +3,42 @@ entries:
   mogdb-apiserver:
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2023-01-10T11:28:43.996711971+08:00"
+    created: "2023-02-20T09:44:17.384646+08:00"
     description: A Helm chart for Kubernetes
-    digest: 2bea534d8fb8f25bab761a1493f9e3d8fc246d0076f733c1fa139d78b7ff0dd1
+    digest: 8a5892ea435ca828f1e8afee9be48f0731acb66513b4a7d35d55725a947f56ca
     name: mogdb-apiserver
     type: application
     urls:
-    - mogdb-apiserver.tgz
+    - mogdb-apiserver-2.0.0.tgz
     version: 2.0.0
   mogdb-cluster:
   - apiVersion: v2
-    appVersion: 2.0.0
-    created: "2023-01-10T11:28:43.997091967+08:00"
+    appVersion: 3.0.0
+    created: "2023-02-20T09:44:17.385009+08:00"
     description: A Helm chart for Kubernetes
-    digest: 30bc4d001a786a48f1ff7960a6d85304efbac01aeea870ae13216e8363062051
+    digest: c3a95e9597b2c1fe69837ed62dcd2f70d99729e0a3d8068c2d4abde224cb7a43
     name: mogdb-cluster
     type: application
     urls:
-    - mogdb-cluster.tgz
-    version: 2.0.0
+    - mogdb-cluster-3.0.0.tgz
+    version: 3.0.0
   mogdb-monitor:
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2023-01-10T11:28:43.998199665+08:00"
+    created: "2023-02-20T09:44:17.386115+08:00"
     description: A Helm chart for Kubernetes
-    digest: 76d31a8a7bfa3b37071a890bdb4a4cb50baa3a395b1dc8bc0b28152284029e61
+    digest: 25477fe0ddeb5cdd7d978d8a4f4a41227ec2c85cb640e7819b3ab7594b1613e5
     name: mogdb-monitor
     type: application
     urls:
-    - mogdb-monitor.tgz
+    - mogdb-monitor-2.0.0.tgz
     version: 2.0.0
   mogdb-operator:
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2023-01-10T11:28:43.99977315+08:00"
+    created: "2023-02-20T09:44:17.3865+08:00"
     description: A Helm chart for Kubernetes
-    digest: 50342760a3fb1cc6a98e93c7472c6a5661f0124528d972a2bfa31dad52e1d421
+    digest: 2ce0ffe8af39c82915982c5bb93227331501c98163266c92a5f08d0e9b63ab33
     name: mogdb-operator
     type: application
     urls:
@@ -47,12 +47,12 @@ entries:
   mogha:
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2023-01-10T11:28:44.000051231+08:00"
+    created: "2023-02-20T09:44:17.386887+08:00"
     description: A Helm chart for Kubernetes
-    digest: db0b39438b86dc6a994c663568f1107df84b2b0184c179f0b6c644d68a27bfdb
+    digest: 496d735c1edd318e9d53a594eb7dc3622ad150c9ba1f9571e26b2f67e8788507
     name: mogha
     type: application
     urls:
-    - mogha.tgz
+    - mogha-2.0.0.tgz
     version: 2.0.0
-generated: "2023-01-10T11:28:43.996215392+08:00"
+generated: "2023-02-20T09:44:17.38358+08:00"

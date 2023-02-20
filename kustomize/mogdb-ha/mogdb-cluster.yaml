@@ -23,7 +23,7 @@ spec:
           requests:
             storage: 1Gi
     initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:3.0.3
-    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:arm64-3.0.3
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.3
     exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
   readPort: 30012
   writePort: 30013

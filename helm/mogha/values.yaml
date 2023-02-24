@@ -25,6 +25,6 @@ resources:
 
 images:
   pullPolicy: IfNotPresent
-  mogha: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha:2.0.0
+  mogha: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha:2.0.1
   etcd: registry.cn-hangzhou.aliyuncs.com/google_containers/etcd:3.5.0-0
 

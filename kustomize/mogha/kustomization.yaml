@@ -15,7 +15,7 @@ images:
     newTag: 3.5.0-0
   - name: mogha
     newName: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha
-    newTag: 2.0.0
+    newTag: 2.0.1
 
 
 patchesStrategicMerge:

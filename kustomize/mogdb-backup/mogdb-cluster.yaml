@@ -37,7 +37,7 @@ spec:
   writePort: 30013
   replicas: 2
   backup:
-    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:2.0.0
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:2.0.1
     baseBackup:
       name: base-backup
       backupSchedules:

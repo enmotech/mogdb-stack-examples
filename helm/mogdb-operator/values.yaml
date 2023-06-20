@@ -18,7 +18,7 @@ imagePullSecretNames: []
 
 singleNamespace: false
 
-controllerImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator:2.0.1
+controllerImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator:2.0.2
 
 haService: http://mogdb-ha.mogha.svc.cluster.local:6544
 

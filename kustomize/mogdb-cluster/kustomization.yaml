@@ -1,7 +1,0 @@
-namespace: mogdb-operator-system
-
-generatorOptions:
-  disableNameSuffixHash: true
-
-resources:
-  - mogdb-cluster.yaml

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: s3-remote
+data:
+  rclone.conf: |
+    [s3-remote]
+    type=s3
+    provider=Minio
+    endpoint=http://10.96.107.225:9000
+    access_key_id=root
+    secret_access_key=root@123

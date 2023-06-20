@@ -1,0 +1,48 @@
+apiVersion: mogdb.enmotech.io/v1
+kind: MogdbCluster
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "install.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.mogdb.replica }}
+  readPort: {{ .Values.service.readPort }}
+  writePort: {{ .Values.service.writePort }}
+  ha:
+    url: {{ .Values.ha.url }}
+    scope: {{ .Values.ha.scope }}
+  podSpec:
+    volumeSpec:
+      persistentVolumeClaim:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.mogdb.volume.dataVolumeSize }}
+        storageClassName: {{ .Values.mogdb.volume.storageClass }}
+    backupVolumeSpec:
+      persistentVolumeClaim:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.mogdb.volume.backupVolumeSize }}
+        storageClassName: {{ .Values.mogdb.volume.storageClass }}
+    image: {{ .Values.images.mogdbImage }}
+    initImage: {{ .Values.images.initImage }}
+    sidecarImage: {{ .Values.images.initImage }}
+    exporterImage: {{ .Values.images.exporterImage }}
+    imagePullPolicy: {{ .Values.images.imagePullPolicy }}
+    {{- if .Values.mogdb.resources }}
+    resources:
+    {{- toYaml .Values.mogdb.resources | nindent 6 }}
+    {{- end }}
+  {{- if .Values.backup }}
+  backup:
+  {{ toYaml .Values.backup | indent 4 }}
+  {{- end }}
+  {{- if .Values.restore }}
+  restore:
+  {{ toYaml .Values.restore | indent 4 }}
+  {{- end }}

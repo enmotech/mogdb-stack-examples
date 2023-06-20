@@ -1,0 +1,7 @@
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: "--health-probe-bind-address=:8081"
+
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: "--metrics-bind-address=127.0.0.1:8080"

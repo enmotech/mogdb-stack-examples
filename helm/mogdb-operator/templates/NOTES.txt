@@ -1,1 +1,1 @@
-Thank you for deploying a MogDB Operator!
+Thank you for deploying MogDB Operator!

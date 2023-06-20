@@ -1,0 +1,78 @@
+apiVersion: mogdb.enmotech.io/v1
+kind: MultiCluster
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "install.labels" . | indent 4 }}
+spec:
+  dataCenters:
+    - dataCenterRole: primary
+      name: {{ .Values.primaryDC.name }}
+      namespace: {{ .Values.primaryDC.namespace }}
+      region: {{ .Values.primaryDC.region }}
+      kubeContextName: {{ .Values.primaryDC.kubeContextName }}
+      dataCenterSpec:
+        {{- if .Values.primaryDC.replica }}
+        replicas: {{ .Values.primaryDC.replica }}
+        {{- end }}
+        {{- if .Values.primaryDC.mogdb }}
+        podSpec:
+        {{- toYaml .Values.primaryDC.mogdb | nindent 10 }}
+        {{- end }}
+        {{- if .Values.backup }}
+        backup:
+        {{ toYaml .Values.backup | indent 10 }}
+        {{- end }}
+        {{- if .Values.restore }}
+        restore:
+        {{ toYaml .Values.restore | indent 10 }}
+        {{- end }}
+    {{- range .Values.standbyDCs }}
+    - dataCenterRole: standby
+      name: {{ .name }}
+      namespace: {{ .namespace }}
+      region: {{ .region }}
+      kubeContextName: {{ .kubeContextName }}
+      dataCenterSpec:
+        {{- if .replica }}
+        replicas: {{ .replica }}
+        {{- end }}
+        {{- if .mogdb }}
+        podSpec:
+        {{- toYaml .mogdb | nindent 10 }}
+        {{- end }}
+    {{- end }}
+  template:
+    replicas: {{ .Values.templates.replica }}
+    readPort: {{ .Values.service.readPort }}
+    writePort: {{ .Values.service.writePort }}
+    ha:
+      url: {{ .Values.templates.ha.url }}
+      scope: {{ .Values.templates.ha.scope }}
+    podSpec:
+      volumeSpec:
+        persistentVolumeClaim:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: {{ .Values.templates.volume.dataVolumeSize }}
+          storageClassName: {{ .Values.templates.volume.storageClass }}
+      backupVolumeSpec:
+        persistentVolumeClaim:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: {{ .Values.templates.volume.backupVolumeSize }}
+          storageClassName: {{ .Values.templates.volume.storageClass }}
+      image: {{ .Values.templates.images.mogdbImage }}
+      initImage: {{ .Values.templates.images.initImage }}
+      sidecarImage: {{ .Values.templates.images.initImage }}
+      exporterImage: {{ .Values.templates.images.exporterImage }}
+      imagePullPolicy: {{ .Values.templates.images.imagePullPolicy }}
+      {{- if .Values.templates.mogdb.resources }}
+      resources:
+      {{- toYaml .Values.templates.mogdb.resources | nindent 6 }}
+      {{- end }}

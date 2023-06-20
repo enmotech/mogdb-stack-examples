@@ -1,0 +1,15 @@
+namespace: mogdb-operator-system
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  - cm_rclone.yaml
+  - ../../bases/multi_cluster.yaml
+
+
+patchesStrategicMerge:
+  - patches/restore_base_by_time.yaml
+  # - patches/restore_base_by_object.yaml
+  # - patches/restore_dumpall_by_time.yaml
+  # - patches/restore_dumpall_by_object.yaml

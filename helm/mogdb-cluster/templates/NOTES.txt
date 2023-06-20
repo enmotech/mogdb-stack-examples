@@ -1,1 +1,1 @@
-Thank you for deploying a MogDB Cluster!
+Thank you for deploying MogDB Cluster!

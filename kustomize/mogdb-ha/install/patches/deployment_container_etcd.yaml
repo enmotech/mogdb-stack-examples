@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mogdb-ha
+  namespace: mogha
+spec:
+  template:
+    spec:
+      containers:
+        - name: etcd
+          image: etcd:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/etcd
+          ports:
+            - name: client
+              containerPort: 2379
+            - name: peer
+              containerPort: 2380
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi

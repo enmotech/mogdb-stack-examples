@@ -1,8 +1,0 @@
-namespace: mogdb-operator-system
-
-generatorOptions:
-  disableNameSuffixHash: true
-
-resources:
-  - mogdb-cluster.yaml
-  - s3-secret.yaml

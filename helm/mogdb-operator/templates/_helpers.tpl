@@ -20,10 +20,24 @@ role name
 {{- end }}
 
 {{/*
+leader election role name
+*/}}
+{{- define "install.leaderRoleName" }}
+{{- printf "%s-leader-election-role" .Chart.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
 role binding name
 */}}
 {{- define "install.roleBindingName" }}
 {{- printf "%s-manager-rolebinding" .Chart.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+leader election role binding name
+*/}}
+{{- define "install.leaderRoleBindingName" }}
+{{- printf "%s-leader-election-rolebinding" .Chart.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*

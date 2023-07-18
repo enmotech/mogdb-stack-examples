@@ -46,10 +46,10 @@ spec:
             # to pass the need repair continue threshold
             - --need-repair-threshold={{ .Values.needRepairThreshold }}
             # to pass storage related config
-            - --base-path="{{ .Values.etcdConfig.key }}"
-            - --etcd-username={{ .Values.etcdConfig.username }}
-            - --etcd-password={{ .Values.etcdConfig.password }}
-            - --etcd-endpoints="{{ .Values.etcdConfig.endpoints }}"
+            - --base-path={{ .Values.etcdConfig.key | quote }}
+            - --etcd-username={{ .Values.etcdConfig.username | quote }}
+            - --etcd-password={{ .Values.etcdConfig.password | quote }}
+            - --etcd-endpoints={{ .Values.etcdConfig.endpoints }}
             - --etcd-timeout={{ .Values.etcdConfig.dialTimeout }}
           readinessProbe:
             httpGet:

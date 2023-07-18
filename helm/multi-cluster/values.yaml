@@ -14,11 +14,11 @@ primaryDC:
     mogdb:
       resources:
         limits:
-          cpu: 2
-          memory: 2Gi
+          cpu: 500m
+          memory: 1Gi
         requests:
-          cpu: 2
-          memory: 2Gi
+          cpu: 500m
+          memory: 1Gi
       volume:
         dataVolumeSize: 2Gi
         backupVolumeSize: 2Gi
@@ -33,26 +33,6 @@ standbyDCs:
       replica: 2
       readPort: 30014
       writePort: 30015
-      mogdb:
-        resources:
-          limits:
-            cpu: 500m
-            memory: 1Gi
-          requests:
-            cpu: 500m
-            memory: 1Gi
-        volume:
-          dataVolumeSize: 1Gi
-          backupVolumeSize: 1Gi
-          storageClass: default
-  - name: dc2
-    namespace: data-plane2
-    region: "dc2"
-    kubeContextName: "data-plane2"
-    spec:
-      replica: 2
-      readPort: 30016
-      writePort: 30017
       mogdb:
         resources:
           limits:

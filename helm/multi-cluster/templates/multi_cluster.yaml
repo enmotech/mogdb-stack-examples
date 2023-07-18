@@ -39,11 +39,11 @@ spec:
           {{- end }}
         {{- if .Values.backup }}
         backup:
-        {{ toYaml .Values.backup | indent 10 }}
+        {{- toYaml .Values.backup | nindent 10 }}
         {{- end }}
         {{- if .Values.restore }}
         restore:
-        {{ toYaml .Values.restore | indent 10 }}
+        {{- toYaml .Values.restore | nindent 10 }}
         {{- end }}
     {{- range .Values.standbyDCs }}
     - dataCenterRole: standby

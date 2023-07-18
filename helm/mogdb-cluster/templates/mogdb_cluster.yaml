@@ -39,9 +39,9 @@ spec:
     {{- end }}
   {{- if .Values.backup }}
   backup:
-  {{ toYaml .Values.backup | nindent 4 }}
+  {{- toYaml .Values.backup | nindent 4 }}
   {{- end }}
   {{- if .Values.restore }}
   restore:
-  {{ toYaml .Values.restore | nindent 4 }}
+  {{- toYaml .Values.restore | nindent 4 }}
   {{- end }}

@@ -4,8 +4,8 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
+  - ../../bases
   - cm_rclone.yaml
-  - ../../bases/multi_cluster.yaml
 
 
 patchesStrategicMerge:

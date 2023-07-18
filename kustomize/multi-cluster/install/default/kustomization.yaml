@@ -4,7 +4,7 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
-  - ../../bases/multi_cluster.yaml
+  - ../../bases
 
 patchesStrategicMerge:
   - patches/datacenters.yaml

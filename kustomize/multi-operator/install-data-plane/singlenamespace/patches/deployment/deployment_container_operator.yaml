@@ -16,7 +16,7 @@ spec:
             - name: CONTROL_PLANE
               value: "false"
           args:
-            - "--leader-elect"
+            - "--leader-election"
           resources:
             limits:
               cpu: 500m

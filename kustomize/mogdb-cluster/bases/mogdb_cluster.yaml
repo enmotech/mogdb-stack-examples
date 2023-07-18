@@ -28,7 +28,6 @@ spec:
           requests:
             storage: 1Gi
     imagePullPolicy: IfNotPresent
-    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.1.0
-    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:3.1.0
-    sidecarImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-agent:3.0.0
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
     exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0

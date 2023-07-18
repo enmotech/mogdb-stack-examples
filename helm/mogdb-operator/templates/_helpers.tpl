@@ -26,32 +26,10 @@ mogdb operator full name
 
 
 {{/*
-role name
-*/}}
-{{- define "install.roleName" }}
-{{- printf "%s-manager-role" .Chart.Name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- define "install.leaderElectionRoleName" }}
-{{- printf "%s-leader-election-role" .Chart.Name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-
-{{/*
-role binding name
-*/}}
-{{- define "install.roleBindingName" }}
-{{- printf "%s-manager-rolebinding" .Chart.Name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- define "install.leaderElectionRoleBindingName" }}
-{{- printf "%s-leader-election-rolebinding" .Chart.Name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-
-{{/*
 service account name
 */}}
 {{- define "install.serviceAccountName" -}}
-{{- printf "%s-%s" .Chart.Name .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-controller-manager" .Chart.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 
@@ -67,12 +45,34 @@ secret name
 
 
 {{/*
+role name
+*/}}
+{{- define "install.roleName" }}
+{{- printf "%s-manager-role" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- define "install.leaderElectionRoleName" }}
+{{- printf "%s-leader-election-role" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+
+{{/*
+role binding name
+*/}}
+{{- define "install.roleBindingName" }}
+{{- printf "%s-manager-rolebinding" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- define "install.leaderElectionRoleBindingName" }}
+{{- printf "%s-leader-election-rolebinding" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+
+{{/*
 Create the kind for role. Will be Role in single
 namespace mode or ClusterRole by default.
 */}}
 {{- define "install.roleKind" -}}
 {{- if .Values.singleNamespace -}}
-Role
+ClusterRole
 {{- else -}}
 ClusterRole
 {{- end }}
@@ -85,7 +85,7 @@ namespace mode or ClusterRoleBinding by default.
 */}}
 {{- define "install.roleBindingKind" -}}
 {{- if .Values.singleNamespace -}}
-RoleBinding
+ClusterRoleBinding
 {{- else -}}
 ClusterRoleBinding
 {{- end }}

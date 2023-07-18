@@ -2,8 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+replica: 2
+
 mogdb:
-  replica: 2
   resources:
     limits:
       cpu: 500m
@@ -26,9 +27,8 @@ ha:
 
 images:
   imagePullPolicy: IfNotPresent
-  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.1.0
-  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:3.1.0
-  sidecarImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-agent:3.0.0
+  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
   exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
 
 

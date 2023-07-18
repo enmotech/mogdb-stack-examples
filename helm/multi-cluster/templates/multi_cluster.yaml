@@ -9,17 +9,34 @@ spec:
   dataCenters:
     - dataCenterRole: primary
       name: {{ .Values.primaryDC.name }}
-      namespace: {{ .Values.primaryDC.namespace }}
       region: {{ .Values.primaryDC.region }}
+      namespace: {{ .Values.primaryDC.namespace }}
       kubeContextName: {{ .Values.primaryDC.kubeContextName }}
       dataCenterSpec:
-        {{- if .Values.primaryDC.replica }}
-        replicas: {{ .Values.primaryDC.replica }}
-        {{- end }}
-        {{- if .Values.primaryDC.mogdb }}
+        replicas: {{ .Values.primaryDC.spec.replica | default .Values.templates.replica }}
+        readPort: {{ .Values.primaryDC.spec.readPort | default .Values.templates.service.readPort }}
+        writePort: {{ .Values.primaryDC.spec.writePort | default .Values.templates.service.writePort }}
         podSpec:
-        {{- toYaml .Values.primaryDC.mogdb | nindent 10 }}
-        {{- end }}
+          volumeSpec:
+            persistentVolumeClaim:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: {{ .Values.primaryDC.spec.mogdb.volume.dataVolumeSize | default .Values.templates.mogdb.volume.dataVolumeSize }}
+              storageClassName: {{ .Values.primaryDC.spec.mogdb.volume.storageClass | default .Values.templates.mogdb.volume.storageClass }}
+          backupVolumeSpec:
+            persistentVolumeClaim:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: {{ .Values.primaryDC.spec.mogdb.volume.backupVolumeSize | default .Values.templates.mogdb.volume.backupVolumeSize }}
+              storageClassName: {{ .Values.primaryDC.spec.mogdb.volume.storageClass | default .Values.templates.mogdb.volume.storageClass }}
+          {{- if .Values.primaryDC.spec.mogdb.resources }}
+          resources:
+          {{- toYaml .Values.primaryDC.spec.mogdb.resources | nindent 12 }}
+          {{- end }}
         {{- if .Values.backup }}
         backup:
         {{ toYaml .Values.backup | indent 10 }}
@@ -31,25 +48,42 @@ spec:
     {{- range .Values.standbyDCs }}
     - dataCenterRole: standby
       name: {{ .name }}
-      namespace: {{ .namespace }}
       region: {{ .region }}
+      namespace: {{ .namespace }}
       kubeContextName: {{ .kubeContextName }}
       dataCenterSpec:
-        {{- if .replica }}
-        replicas: {{ .replica }}
-        {{- end }}
-        {{- if .mogdb }}
+        replicas: {{ .spec.replica | default $.Values.templates.replica }}
+        readPort: {{ .spec.readPort | default $.Values.templates.service.readPort }}
+        writePort: {{ .spec.writePort | default $.Values.templates.service.writePort }}
         podSpec:
-        {{- toYaml .mogdb | nindent 10 }}
-        {{- end }}
+          volumeSpec:
+            persistentVolumeClaim:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: {{ .spec.mogdb.volume.dataVolumeSize | default $.Values.templates.mogdb.volume.dataVolumeSize }}
+              storageClassName: {{ .spec.mogdb.volume.storageClass | default $.Values.templates.mogdb.volume.storageClass }}
+          backupVolumeSpec:
+            persistentVolumeClaim:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: {{ .spec.mogdb.volume.backupVolumeSize | default $.Values.templates.mogdb.volume.backupVolumeSize }}
+              storageClassName: {{ .spec.mogdb.volume.storageClass | default $.Values.templates.mogdb.volume.storageClass }}
+          {{- if .spec.mogdb.resources }}
+          resources:
+          {{- toYaml .spec.mogdb.resources | nindent 12 }}
+          {{- end }}
     {{- end }}
   template:
     replicas: {{ .Values.templates.replica }}
-    readPort: {{ .Values.service.readPort }}
-    writePort: {{ .Values.service.writePort }}
+    readPort: {{ .Values.templates.service.readPort }}
+    writePort: {{ .Values.templates.service.writePort }}
     ha:
+      scope: {{ .Release.Name }}
       url: {{ .Values.templates.ha.url }}
-      scope: {{ .Values.templates.ha.scope }}
     podSpec:
       volumeSpec:
         persistentVolumeClaim:
@@ -57,22 +91,21 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: {{ .Values.templates.volume.dataVolumeSize }}
-          storageClassName: {{ .Values.templates.volume.storageClass }}
+              storage: {{ .Values.templates.mogdb.volume.dataVolumeSize }}
+          storageClassName: {{ .Values.templates.mogdb.volume.storageClass }}
       backupVolumeSpec:
         persistentVolumeClaim:
           accessModes:
             - ReadWriteOnce
           resources:
             requests:
-              storage: {{ .Values.templates.volume.backupVolumeSize }}
-          storageClassName: {{ .Values.templates.volume.storageClass }}
+              storage: {{ .Values.templates.mogdb.volume.backupVolumeSize }}
+          storageClassName: {{ .Values.templates.mogdb.volume.storageClass }}
       image: {{ .Values.templates.images.mogdbImage }}
       initImage: {{ .Values.templates.images.initImage }}
-      sidecarImage: {{ .Values.templates.images.initImage }}
       exporterImage: {{ .Values.templates.images.exporterImage }}
       imagePullPolicy: {{ .Values.templates.images.imagePullPolicy }}
       {{- if .Values.templates.mogdb.resources }}
       resources:
-      {{- toYaml .Values.templates.mogdb.resources | nindent 6 }}
+      {{- toYaml .Values.templates.mogdb.resources | nindent 8 }}
       {{- end }}

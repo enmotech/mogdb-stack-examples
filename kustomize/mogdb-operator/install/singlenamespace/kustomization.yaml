@@ -40,6 +40,14 @@ patchesJson6902:
     path: patches/deployment/deployment_container_operator_metrics.yaml
   - target: { group: "", version: v1, kind: Deployment, name: manager }
     path: patches/deployment/deployment_container_operator_singlenamespace.yaml
+  - path: patches/rbac/manager_role.yaml
+    target: {group: rbac.authorization.k8s.io, version: v1, kind: ClusterRole, name: manager-role}
+  - path: patches/rbac/manager_role_binding.yaml
+    target: {group: rbac.authorization.k8s.io, version: v1, kind: ClusterRoleBinding, name: manager-rolebinding}
+  - path: patches/rbac/leader_election_role.yaml
+    target: {group: rbac.authorization.k8s.io, version: v1, kind: ClusterRole, name: leader-election-role}
+  - path: patches/rbac/leader_election_role_binding.yaml
+    target: {group: rbac.authorization.k8s.io, version: v1, kind: ClusterRoleBinding, name: leader-election-rolebinding}
 
 # the following config is for teaching kustomize how to do var substitution
 vars:

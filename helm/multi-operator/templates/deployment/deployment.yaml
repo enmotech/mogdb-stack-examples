@@ -27,24 +27,24 @@ spec:
           command:
             - /usr/local/bin/multi-operator
           args:
-            - "--leader-elect"
+            - "--leader-election"
           {{- if .Values.singleNamespace }}
             - "--namespace={{ .Release.Namespace }}"
           {{- end }}
           {{- if .Values.enablePrometheusMonitor }}
-            - "--health-probe-bind-address=:8081"
-            - "--metrics-bind-address=127.0.0.1:8080"
+            - "--health-probe-address=:8081"
+            - "--metrics-address=127.0.0.1:8080"
           {{- end }}
           readinessProbe:
             httpGet:
               path: /readyz
-              port: 9081
+              port: 8081
             periodSeconds: 10
             initialDelaySeconds: 5
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 9081
+              port: 8081
             periodSeconds: 20
             initialDelaySeconds: 15
           securityContext:

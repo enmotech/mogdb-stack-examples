@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "install.labels" . | indent 4 }}
 spec:
-  replicas: {{ .Values.mogdb.replica }}
+  replicas: {{ .Values.replica }}
   readPort: {{ .Values.service.readPort }}
   writePort: {{ .Values.service.writePort }}
   ha:
@@ -31,7 +31,6 @@ spec:
         storageClassName: {{ .Values.mogdb.volume.storageClass }}
     image: {{ .Values.images.mogdbImage }}
     initImage: {{ .Values.images.initImage }}
-    sidecarImage: {{ .Values.images.initImage }}
     exporterImage: {{ .Values.images.exporterImage }}
     imagePullPolicy: {{ .Values.images.imagePullPolicy }}
     {{- if .Values.mogdb.resources }}
@@ -40,9 +39,9 @@ spec:
     {{- end }}
   {{- if .Values.backup }}
   backup:
-  {{ toYaml .Values.backup | indent 4 }}
+  {{ toYaml .Values.backup | nindent 4 }}
   {{- end }}
   {{- if .Values.restore }}
   restore:
-  {{ toYaml .Values.restore | indent 4 }}
+  {{ toYaml .Values.restore | nindent 4 }}
   {{- end }}

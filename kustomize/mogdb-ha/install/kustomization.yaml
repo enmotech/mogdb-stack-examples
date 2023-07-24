@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configurations:
+  - kustomizeconfig.yaml
+
+# Adds namespace to all resources.
+namespace: mogdb-ha
+
+# Value of this field is prepended to the names of all resources
+# e.g. a deployment named "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace field above.
+# namePrefix: mogdb-ha-
+
+# Labels to add to all resources and selectors.
+commonLabels:
+  app: mogdb-ha
+
+resources:
+  - ../bases
+
+images:
+  - name: mogha
+    newName: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha
+    newTag: 3.0.0
+  - name: etcd
+    newName: registry.cn-hangzhou.aliyuncs.com/google_containers/etcd
+    newTag: 3.5.0-0
+
+
+patchesStrategicMerge:
+  # ---- important ----
+  # if you do not want a simple install,
+  # comment the `patches/deployment-container-etcd.yaml` line to avoid install etcd with mogha in the same pod,
+  # and modify patch file `patches/deployment-container-mogha.yaml` to pass some etcd related configuration.
+  # ---- important ----
+  - patches/deployment_container_etcd.yaml
+  - patches/deployment_container_mogha.yaml
+
+# the following config is for teaching kustomize how to do var substitution
+vars:
+  - name: SA_NAME
+    objref:
+      name: mogdb-ha
+      apiVersion: v1
+      kind: ServiceAccount
+    fieldref:
+      fieldpath: metadata.name
+  - name: IMAGE_PULL_SECRET_NAME
+    objref:
+      apiVersion: v1
+      kind: Secret
+      name: mogdb-ha-huawei-registry
+    fieldref:
+      fieldpath: metadata.name

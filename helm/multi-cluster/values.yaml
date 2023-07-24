@@ -1,0 +1,103 @@
+# Default values for mogdb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+primaryDC:
+  name: dc0
+  namespace: data-plane0
+  region: "dc0"
+  kubeContextName: "data-plane0"
+  spec:
+    replica: 2
+    readPort: 30012
+    writePort: 30013
+    mogdb:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      volume:
+        dataVolumeSize: 2Gi
+        backupVolumeSize: 2Gi
+        storageClass: default
+
+standbyDCs:
+  - name: dc1
+    namespace: data-plane1
+    region: "dc1"
+    kubeContextName: "data-plane1"
+    spec:
+      replica: 2
+      readPort: 30014
+      writePort: 30015
+      mogdb:
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        volume:
+          dataVolumeSize: 1Gi
+          backupVolumeSize: 1Gi
+          storageClass: default
+
+
+templates:
+  replica: 2
+  service:
+    readPort: 30012
+    writePort: 30013
+  mogdb:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    volume:
+      dataVolumeSize: 1Gi
+      backupVolumeSize: 1Gi
+      storageClass: default
+  ha:
+    url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544
+  images:
+    imagePullPolicy: IfNotPresent
+    mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+    exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
+
+backup: {}
+#backup:
+#  auto:
+#    name: "auto"
+#    backupSchedules:
+#      full: "*/1 * * * *"
+#    storageProvider:
+#      rcloneStorage:
+#        name: s3-remote
+#        directory: backup
+#    backupType: basebackup
+#    backupFileHistoryLimit: 7
+#    failedJobsHistoryLimit: 7
+#    successfulJobsHistoryLimit: 7
+#  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0
+
+restore: {}
+#restore:
+#  restoreId: "001"
+#  dataSource:
+#    type: "object"
+#    backupType: dumpall
+#    clusterName: mogdb-cluster
+#    storageProvider:
+#      rcloneStorage:
+#        name: s3-remote
+#        directory: backup
+#    target: dumpall-2023-05-15-08-56-21.tar.gz
+#  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0

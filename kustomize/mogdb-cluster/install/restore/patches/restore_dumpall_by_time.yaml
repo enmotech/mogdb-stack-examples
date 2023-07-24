@@ -1,0 +1,18 @@
+apiVersion: mogdb.enmotech.io/v1
+kind: MogdbCluster
+metadata:
+  name: mogdb-cluster
+  namespace: mogdb-operator-system
+spec:
+  restore:
+    restoreId: "001"
+    dataSource:
+      type: "time"
+      backupType: dumpall
+      clusterName: mogdb-cluster
+      storageProvider:
+        rcloneStorage:
+          name: s3-remote
+          directory: backup
+      target: "2023-05-17T03:38:09.82"
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0

@@ -2,57 +2,64 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-clusterName: cluster1
-nameSpace: mogdb-operator-system
+replica: 2
 
-replicaCount: 2
+mogdb:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  volume:
+    dataVolumeSize: 1Gi
+    backupVolumeSize: 1Gi
+    storageClass: default
 
-resources:
-  limits:
-    cpu: 500m
-    memory: 1Gi
-  requests:
-    cpu: 500m
-    memory: 1Gi
+service:
+  readPort: 30012
+  writePort: 30013
 
-singleNamespace: true
+ha:
+  scope: default
+  url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544
 
-readPort: 30012
-writePort: 30013
+images:
+  imagePullPolicy: IfNotPresent
+  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+  exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
 
-enableHa: false
 
 backup: {}
 #backup:
-#  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:arm64-2.0.0
-#  baseBackup:
-#    name: base-backup
+#  auto:
+#    name: "auto"
 #    backupSchedules:
-#      full: "0 */10 * * * ?"
-#    backupScheduleHistoryLimit: 7
-#    s3:
-#      secretName: s3-creds
-#      provider: Minio
-#      endPoint: http://10.101.90.25:9000
-#      bucket: backup
+#      full: "*/1 * * * *"
+#    storageProvider:
+#      rcloneStorage:
+#        name: s3-remote
+#        directory: backup
+#    backupType: basebackup
+#    backupFileHistoryLimit: 7
+#    failedJobsHistoryLimit: 7
+#    successfulJobsHistoryLimit: 7
+#  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0
 
 restore: {}
 #restore:
-#  restoreId: a
+#  restoreId: "001"
 #  dataSource:
-#    clusterName: cluster1
-#    baseBackupSource:
-#      type: object
-#      target: cluster1-auto-2022-12-12t08-50-00-547zp
+#    type: "object"
+#    backupType: dumpall
+#    clusterName: mogdb-cluster
+#    storageProvider:
+#      rcloneStorage:
+#        name: s3-remote
+#        directory: backup
+#    target: dumpall-2023-05-15-08-56-21.tar.gz
+#  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0
 
 
-images:
-  pullPolicy: IfNotPresent
-  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:3.0.3
-  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.3
-  exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
-
-volume:
-  storageClass: local-path
-  dataStorageSize: 1Gi
-  backupStorageSize: 1Gi

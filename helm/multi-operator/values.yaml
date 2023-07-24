@@ -1,0 +1,25 @@
+# Default values for mogdb-operator-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+withCRD: false
+
+singleNamespace: false
+
+enableControl: true
+
+enablePrometheusMonitor: true
+
+imagePullSecrets: {}
+imagePullSecretNames: []
+
+operator:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 500m
+      memory: 500Mi
+  imagePullPolicy: IfNotPresent
+  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/multi-operator:3.0.0

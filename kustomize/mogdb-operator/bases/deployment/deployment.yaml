@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mogdb-operator
+  name: manager
+  namespace: mogdb-operator-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mogdb-operator
+  template:
+    metadata:
+      labels:
+        app: mogdb-operator
+    spec:
+      securityContext:
+        runAsNonRoot: false
+      containers:
+        - name: operator
+          image: controller:latest
+          imagePullPolicy: Always
+          env:
+            - name: MOG_OPERATOR_NAMESPACE
+              value: $(NAMESPACE)
+          command:
+            - /usr/local/bin/mogdb-operator
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          securityContext:
+            allowPrivilegeEscalation: false
+      serviceAccountName: $(SA_NAME)
+      terminationGracePeriodSeconds: 10
+      imagePullSecrets:
+        - name: $(IMAGE_PULL_SECRET_NAME)

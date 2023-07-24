@@ -1,0 +1,6 @@
+resources:
+  - configmap_global.yaml
+  - configmap_rclone.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true

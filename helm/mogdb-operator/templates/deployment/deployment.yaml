@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "install.managerName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "install.labels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "install.labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "install.labels" . | indent 8 }}
+    spec:
+      containers:
+        - name: operator
+          image: {{ required "operator.image is required" .Values.operator.image | quote }}
+          imagePullPolicy: {{ .Values.operator.imagePullPolicy }}
+          env:
+            - name: MOG_OPERATOR_NAMESPACE
+              value: {{ .Release.Namespace }}
+          command:
+            - /usr/local/bin/mogdb-operator
+          args:
+            - "--leader-elect"
+            - "--zap-time-encoding=iso8601"
+            {{- if .Values.singleNamespace }}
+            - "--namespace={{ .Release.Namespace }}"
+            {{- end }}
+            {{- if .Values.enablePrometheusMonitor }}
+            - "--health-probe-bind-address=:8081"
+            - "--metrics-bind-address=127.0.0.1:8080"
+            {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          securityContext:
+            allowPrivilegeEscalation: false
+          {{- if .Values.operator.resources }}
+          resources:
+          {{- toYaml .Values.operator.resources | nindent 12 }}
+          {{- end }}
+      securityContext:
+        runAsNonRoot: false
+      terminationGracePeriodSeconds: 10
+      {{- include "install.imagePullSecrets" . | nindent 6 }}
+      serviceAccountName: {{ include "install.serviceAccountName" .}}

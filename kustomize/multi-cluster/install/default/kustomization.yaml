@@ -1,0 +1,10 @@
+namespace: mogdb-operator-system
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  - ../../bases
+
+patchesStrategicMerge:
+  - patches/datacenters.yaml

@@ -1,0 +1,61 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configurations:
+  - kustomizeconfig.yaml
+
+# Add labels to all resources.
+commonLabels:
+  app: mogdb-multi-operator
+
+# Add namespace to all resources.
+namespace: mogdb-operator-system
+
+# Value of this field is prepended to the names of all resources
+# e.g. a deployment named "wordpress" becomes "alices-wordpress".
+# Note that it should also match with the prefix (text before '-') of the namespace field above.
+namePrefix: mogdb-multi-
+
+resources:
+  - ../../bases/secret
+  - ../../bases/deployment
+  - ../../bases/rbac/cluster
+
+images:
+  - name: controller
+    newName: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/multi-operator
+    newTag: 3.0.0
+
+patchesStrategicMerge:
+  # Customize the container of the operator.
+  - patches/deployment/deployment_container_operator.yaml
+
+
+patchesJson6902:
+  - target: { group: "", version: v1, kind: Deployment, name: manager }
+    path: patches/deployment/deployment_container_operator_metrics.yaml
+
+
+# the following config is for teaching kustomize how to do var substitution
+vars:
+  - name: SA_NAME
+    objref:
+      apiVersion: v1
+      kind: ServiceAccount
+      name: serviceaccount
+    fieldref:
+      fieldpath: metadata.name
+  - name: IMAGE_PULL_SECRET_NAME
+    objref:
+      apiVersion: v1
+      kind: Secret
+      name: huawei-registry
+    fieldref:
+      fieldpath: metadata.name
+  - name: NAMESPACE
+    objref:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: manager
+    fieldref:
+      fieldpath: metadata.namespace

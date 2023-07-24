@@ -1,0 +1,61 @@
+# Default values for mogdb-ha-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+withEtcd: false
+
+singleNamespace: false
+
+imagePullSecrets: {}
+imagePullSecretNames: []
+
+# to enable/disable debug mod
+debug: false
+# to enable/disable failOver switch
+failover: true
+# to pass the ha server's port number
+apiPort: 6544
+# to pass the ha's timeout in seconds
+apiTimeout: 60
+# the interval between mogdb build
+buildInterval: 30s
+# the mogdb probe period that ha used
+dbProbePeriod: 5
+# the mogdb probe failure threshold that ha used
+dbProbeFailureThreshold: 3
+# the interval for monitoring the cluster in seconds
+observePeriod: 5s
+# the mogdb failover threshold that ha used in seconds
+failoverThreshold: 30s
+# # to pass the need repair continue threshold
+needRepairThreshold: 30s
+
+ha:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 500m
+      memory: 500Mi
+  imagePullPolicy: IfNotPresent
+  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha:3.0.0
+
+etcd:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 500m
+      memory: 500Mi
+  imagePullPolicy: IfNotPresent
+  image: registry.cn-hangzhou.aliyuncs.com/google_containers/etcd:3.5.0-0
+
+
+etcdConfig:
+  key: mogha
+  username: ""
+  password: ""
+  endpoints: 127.0.0.1:2379
+  dialTimeout: 5

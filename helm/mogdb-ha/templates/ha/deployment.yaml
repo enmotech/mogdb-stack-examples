@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "install.haName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "install.labels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "install.labels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "install.labels" . | indent 8 }}
+    spec:
+      containers:
+        - name: mogha
+          image: {{ required ".Values.controllerImage is required" .Values.ha.image | quote }}
+          imagePullPolicy: {{ .Values.ha.imagePullPolicy }}
+          ports:
+            - name: api
+              containerPort: {{ .Values.apiPort }}
+          command:
+            - /usr/local/bin/mogdb-ha
+          args:
+            # to enable/disable debug mod
+            - --debug={{ .Values.debug }}
+            # to enable/disable failOver switch
+            - --failover={{ .Values.failover }}
+            # to pass the ha's timeout in seconds
+            - --api-timeout={{ .Values.apiTimeout }}
+            # to pass the ha server's port number
+            - --api-server-port={{ .Values.apiPort }}
+            # the interval between mogdb build
+            - --build-interval={{ .Values.buildInterval }}
+            # to pass the mogdb probe period that ha used
+            - --db-probe-period={{ .Values.dbProbePeriod }}
+            # to pass the mogdb probe failure threshold that ha used
+            - --db-probe-failure-threshold={{ .Values.dbProbeFailureThreshold }}
+            # to pass the interval for monitoring the cluster in seconds
+            - --observe-period={{ .Values.observePeriod }}
+            # to pass the failover threshold
+            - --failover-threshold={{ .Values.failoverThreshold }}
+            # to pass the need repair continue threshold
+            - --need-repair-threshold={{ .Values.needRepairThreshold }}
+            # to pass storage related config
+            - --base-path={{ .Values.etcdConfig.key | quote }}
+            - --etcd-username={{ .Values.etcdConfig.username | quote }}
+            - --etcd-password={{ .Values.etcdConfig.password | quote }}
+            - --etcd-endpoints={{ .Values.etcdConfig.endpoints }}
+            - --etcd-timeout={{ .Values.etcdConfig.dialTimeout }}
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: {{ .Values.apiPort }}
+              scheme: HTTP
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            initialDelaySeconds: 10
+          livenessProbe:
+            httpGet:
+              path: "/"
+              port: {{ .Values.apiPort }}
+              scheme: HTTP
+            periodSeconds: 30
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            initialDelaySeconds: 60
+          securityContext:
+            privileged: false
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+          {{- if .Values.ha.resources }}
+          resources:
+          {{- toYaml .Values.ha.resources | nindent 12 }}
+          {{- end }}
+        {{- if .Values.withEtcd }}
+        - name: etcd
+          image: {{ required ".Values.controllerImage is required" .Values.etcd.image | quote }}
+          imagePullPolicy: {{ .Values.etcd.imagePullPolicy }}
+          ports:
+            - name: client
+              containerPort: 2379
+            - name: peer
+              containerPort: 2380
+          command:
+            - /usr/local/bin/etcd
+          {{- if .Values.etcd.resources }}
+          resources:
+          {{- toYaml .Values.etcd.resources | nindent 12 }}
+          {{- end }}
+        {{- end }}
+      securityContext:
+        runAsNonRoot: false
+      terminationGracePeriodSeconds: 10
+      {{- include "install.imagePullSecrets" . | nindent 6 }}
+      serviceAccountName: {{ include "install.serviceAccountName" . }}

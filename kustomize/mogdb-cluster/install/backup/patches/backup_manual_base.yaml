@@ -1,0 +1,15 @@
+apiVersion: mogdb.enmotech.io/v1
+kind: MogdbCluster
+metadata:
+  name: mogdb-cluster
+  namespace: mogdb-operator-system
+spec:
+  backup:
+    manual:
+      id: "001"
+      backupType: basebackup
+      storageProvider:
+        rcloneStorage:
+          name: s3-remote
+          directory: backup
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0

@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mogdb-ha
+  namespace: mogha
+  labels:
+    app: mogdb-ha
+spec:
+  ports:
+    - name: api
+      protocol: TCP
+      port: 6544
+      nodePort: 32544
+      targetPort: 6544
+  selector:
+    app: mogdb-ha
+  type: NodePort
+  sessionAffinity: None

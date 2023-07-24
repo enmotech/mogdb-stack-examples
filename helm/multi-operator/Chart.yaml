@@ -1,0 +1,27 @@
+apiVersion: v2
+version: 3.0.0
+appVersion: "3.0.0"
+type: application
+name: multi-operator
+home: https://www.mogdb.io/
+description: Helm chart for deploying MogDB Multi Operator on Kubernetes
+
+keywords:
+  - mogdb
+  - operator
+  - database
+  - multi-cluster
+
+sources:
+  - https://www.mogdb.io
+  - https://github.com/enmotech/charts
+  - https://github.com/enmotech/mogdb-stack-examples
+
+maintainers:
+  - name: yabin.ji
+    email: yabin.ji@enmotech.com
+  - name: dong.wang
+    email: dong.wang@enmotech.com
+  - name: houzhen.su
+    email: suhouzhen2020@gmail.com
+    url: https://su-houzhen.github.io/

@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "install.globalConfigmapName" . }}
+data:
+  config.json: |
+    {
+      "region": "",
+      "debugging": {{ .Values.debug }},
+      "operatorName": "",
+      "haServices": ["{{ .Values.haService }}"],
+      "license": {
+        "licValue": "{{ .Values.license.licValue }}",
+        "encodeStd": "{{ .Values.license.encodeStd }}"
+      },
+      "imageNamePairs": [
+        {"name": "RELATED_IMAGE_BACKUP", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:2.0.0"},
+        {"name": "RELATED_IMAGE_RESTORE", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-remoteclient:2.0.0"},
+        {"name": "RELATED_IMAGE_MOGDB_2.0.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:v2.0.0"},
+        {"name": "RELATED_IMAGE_MOGDB_INIT_2.0.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:v2.0.0"},
+        {"name": "RELATED_IMAGE_MOGDB_EXPORTER_2.0.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:v2.0.0"},
+        {"name": "RELATED_IMAGE_MOGDB_2.1.1", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:v2.1.1"},
+        {"name": "RELATED_IMAGE_MOGDB_INIT_2.1.1", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:v2.1.1"},
+        {"name": "RELATED_IMAGE_MOGDB_EXPORTER_2.1.1", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:v2.1.1"},
+        {"name": "RELATED_IMAGE_MOGDB_3.0.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:v3.0.0"},
+        {"name": "RELATED_IMAGE_MOGDB_INIT_3.0.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:v3.0.0"},
+        {"name": "RELATED_IMAGE_MOGDB_EXPORTER_3.0.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:v3.0.0"},
+        {"name": "RELATED_IMAGE_MOGDB_3.1.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:v3.1.0"},
+        {"name": "RELATED_IMAGE_MOGDB_INIT_3.1.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-init:v3.1.0"},
+        {"name": "RELATED_IMAGE_MOGDB_EXPORTER_3.1.0", "image": "swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:v3.1.0"}
+      ],
+      "container": {
+        "imagePullPolicy": "{{ .Values.container.imagePullPolicy }}",
+        "resources": {
+          "limits": {"cpu": "{{ .Values.container.resources.limits.cpu }}", "memory": "{{ .Values.container.resources.limits.memory }}"},
+          "requests": {"cpu": "{{ .Values.container.resources.requests.cpu }}", "memory": "{{ .Values.container.resources.requests.memory }}"}
+        },
+        "jobResources": {
+          "limits": {"cpu": "{{ .Values.container.jobResources.limits.cpu }}", "memory": "{{ .Values.container.jobResources.limits.memory }}"},
+          "requests": {"cpu": "{{ .Values.container.jobResources.requests.cpu }}", "memory": "{{ .Values.container.jobResources.requests.memory }}"}
+        },
+        "metricsExporterResources": {
+          "limits": {"cpu": "{{ .Values.container.metricsExporterResources.limits.cpu }}", "memory": "{{ .Values.container.metricsExporterResources.limits.memory }}"},
+          "requests": {"cpu": "{{ .Values.container.metricsExporterResources.requests.cpu }}", "memory": "{{ .Values.container.metricsExporterResources.requests.memory }}"}
+        }
+      }
+    }

@@ -1,0 +1,163 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: {{ include "install.roleKind" . }}
+metadata:
+  name: {{ include "install.roleName" . }}
+rules:
+  - apiGroups:
+      - apps
+    resources:
+      - statefulsets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+      - jobs
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - events
+      - persistentvolumeclaims
+      - persistentvolumes
+      - pods
+      - pods/exec
+      - secrets
+      - services
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+      - serviceaccounts
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - kubeclientconfigs
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbclusters
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbclusters/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbclusters/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbclustertemplates
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbpodtemplates
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiclusters
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiclusters/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiclusters/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - rolebindings
+      - roles
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch

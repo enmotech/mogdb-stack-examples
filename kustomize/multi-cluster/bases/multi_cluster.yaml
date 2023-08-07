@@ -1,7 +1,7 @@
 apiVersion: mogdb.enmotech.io/v1
 kind: MultiCluster
 metadata:
-  name: mogdb-cluster
+  name: multi-cluster
   namespace: mogdb-operator-system
 spec:
   template:
@@ -29,6 +29,6 @@ spec:
             requests:
               storage: 1Gi
       imagePullPolicy: IfNotPresent
-      image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
-      initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+      image: swr.cn-north-4.myhuaweicloud.com/mogdb/mogdb:3.0.4
+      initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/init:3.0.4
       exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0

@@ -27,9 +27,9 @@ ha:
 
 images:
   imagePullPolicy: IfNotPresent
-  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
-  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
-  exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
+  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb/mogdb:3.0.4
+  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/init:3.0.4
+  exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0
 
 
 backup: {}

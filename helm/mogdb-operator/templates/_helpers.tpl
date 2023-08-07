@@ -72,6 +72,12 @@ role binding name
 {{- printf "%s-leader-election-rolebinding" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{/*
+leader role binding name
+*/}}
+{{- define "install.leaderRoleBindingName" }}
+{{- printf "%s-leader-rolebinding" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
 
 {{/*
 Create the kind for role. Will be Role in single

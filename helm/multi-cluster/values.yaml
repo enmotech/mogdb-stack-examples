@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 primaryDC:
-  name: dc0
-  namespace: data-plane0
-  region: "dc0"
-  kubeContextName: "data-plane0"
+  name: dc1
+  namespace: data-plane1
+  region: "dc1"
+  kubeContextName: "data-plane1"
   spec:
     replica: 2
     readPort: 30012
@@ -25,10 +25,10 @@ primaryDC:
         storageClass: default
 
 standbyDCs:
-  - name: dc1
-    namespace: data-plane1
-    region: "dc1"
-    kubeContextName: "data-plane1"
+  - name: dc2
+    namespace: data-plane2
+    region: "dc2"
+    kubeContextName: "data-plane2"
     spec:
       replica: 2
       readPort: 30014
@@ -68,9 +68,9 @@ templates:
     url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544
   images:
     imagePullPolicy: IfNotPresent
-    mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
-    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
-    exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.0.3
+    mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb/mogdb:3.0.4
+    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/init:3.0.4
+    exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0
 
 backup: {}
 #backup:

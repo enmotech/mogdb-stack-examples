@@ -13,6 +13,10 @@ spec:
       dataCenterSpec:
         readPort: 30012
         writePort: 30013
+        # podSpec:
+        #   resources:
+        #     requests:
+        #       cpu: 300m
     - name: dc2
       namespace: data-plane2
       region: "dc2"
@@ -21,3 +25,7 @@ spec:
       dataCenterSpec:
         readPort: 30014
         writePort: 30015
+        # podSpec:
+        #   resources:
+        #     requests:
+        #       cpu: 300m

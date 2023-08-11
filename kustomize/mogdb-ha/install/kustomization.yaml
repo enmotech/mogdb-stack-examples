@@ -22,7 +22,7 @@ resources:
 images:
   - name: mogha
     newName: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha
-    newTag: 3.0.0
+    newTag: dev.009
   - name: etcd
     newName: registry.cn-hangzhou.aliyuncs.com/google_containers/etcd
     newTag: 3.5.0-0

@@ -22,4 +22,4 @@ operator:
       cpu: 500m
       memory: 500Mi
   imagePullPolicy: IfNotPresent
-  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/multi-operator:3.0.0
+  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/multi-operator:dev.009

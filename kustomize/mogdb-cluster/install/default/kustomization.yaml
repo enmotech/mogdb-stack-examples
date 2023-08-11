@@ -4,4 +4,4 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
-  - ../../bases/mogdb_cluster.yaml
+  - ../../bases

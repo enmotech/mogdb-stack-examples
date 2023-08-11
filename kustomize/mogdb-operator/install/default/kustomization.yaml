@@ -25,7 +25,7 @@ resources:
 images:
   - name: controller
     newName: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator
-    newTag: 3.0.0
+    newTag: dev.009
 
 patchesStrategicMerge:
   # Customize the global configuration of the operator.

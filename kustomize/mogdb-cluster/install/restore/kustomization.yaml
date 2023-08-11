@@ -9,6 +9,7 @@ resources:
 
 
 patchesStrategicMerge:
+  - patches/image_pull_secret_names.yaml
   # - patches/restore_base_by_time.yaml
   # - patches/restore_base_by_object.yaml
   # - patches/restore_dumpall_by_time.yaml

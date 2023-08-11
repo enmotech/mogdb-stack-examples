@@ -24,6 +24,7 @@ primaryDC:
     readPort: 30012
     # The default writePort of primaryDC.
     writePort: 30013
+    imagePullSecretNames: []
     # specify compute and volume resources for mogdb pod.
     mogdb:
       resources:
@@ -60,6 +61,7 @@ standbyDCs:
       readPort: 30014
       # The default writePort of standbyDCs.
       writePort: 30015
+      imagePullSecretNames: []
       # specify compute and volume resources for mogdb pod.
       mogdb:
         resources:

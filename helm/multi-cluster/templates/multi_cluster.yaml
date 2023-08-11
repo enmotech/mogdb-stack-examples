@@ -33,6 +33,12 @@ spec:
                 requests:
                   storage: {{ .Values.primaryDC.spec.mogdb.volume.backupVolumeSize | default .Values.templates.mogdb.volume.backupVolumeSize }}
               storageClassName: {{ .Values.primaryDC.spec.mogdb.volume.storageClass | default .Values.templates.mogdb.volume.storageClass }}
+          {{- if .Values.primaryDC.spec.imagePullSecretNames }}
+          imagePullSecrets:
+          {{- range .Values.primaryDC.spec.imagePullSecretNames }}
+            - name: {{ . | quote }}
+          {{- end }}{{/* range */}}
+          {{- end }}{{/* define */}}
           {{- if .Values.primaryDC.spec.mogdb.resources }}
           resources:
           {{- toYaml .Values.primaryDC.spec.mogdb.resources | nindent 12 }}
@@ -72,6 +78,12 @@ spec:
                 requests:
                   storage: {{ .spec.mogdb.volume.backupVolumeSize | default $.Values.templates.mogdb.volume.backupVolumeSize }}
               storageClassName: {{ .spec.mogdb.volume.storageClass | default $.Values.templates.mogdb.volume.storageClass }}
+          {{- if .spec.imagePullSecretNames }}
+          imagePullSecrets:
+          {{- range .spec.imagePullSecretNames }}
+            - name: {{ . | quote }}
+          {{- end }}{{/* range */}}
+          {{- end }}{{/* define */}}
           {{- if .spec.mogdb.resources }}
           resources:
           {{- toYaml .spec.mogdb.resources | nindent 12 }}

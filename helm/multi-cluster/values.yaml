@@ -11,6 +11,7 @@ primaryDC:
     replica: 2
     readPort: 30012
     writePort: 30013
+    imagePullSecretNames: []
     mogdb:
       resources:
         limits:
@@ -33,6 +34,7 @@ standbyDCs:
       replica: 2
       readPort: 30014
       writePort: 30015
+      imagePullSecretNames: []
       mogdb:
         resources:
           limits:

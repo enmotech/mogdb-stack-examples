@@ -4,6 +4,8 @@
 
 replica: 2
 
+imagePullSecretNames: [mogdb-operator-huawei-registry]
+
 mogdb:
   resources:
     limits:

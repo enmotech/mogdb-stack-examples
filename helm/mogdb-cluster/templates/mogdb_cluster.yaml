@@ -29,6 +29,12 @@ spec:
           requests:
             storage: {{ .Values.mogdb.volume.backupVolumeSize }}
         storageClassName: {{ .Values.mogdb.volume.storageClass }}
+    {{- if .Values.imagePullSecretNames }}
+    imagePullSecrets:
+    {{- range .Values.imagePullSecretNames }}
+      - name: {{ . | quote }}
+    {{- end }}{{/* range */}}
+    {{- end }}{{/* define */}}
     image: {{ .Values.images.mogdbImage }}
     initImage: {{ .Values.images.initImage }}
     exporterImage: {{ .Values.images.exporterImage }}

@@ -8,3 +8,4 @@ resources:
 
 patchesStrategicMerge:
   - patches/datacenters.yaml
+  - patches/image_pull_secret_names.yaml

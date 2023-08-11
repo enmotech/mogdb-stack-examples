@@ -5,3 +5,7 @@ generatorOptions:
 
 resources:
   - ../../bases/mogdb_cluster.yaml
+
+
+patchesStrategicMerge:
+  - patches/image_pull_secret_names.yaml

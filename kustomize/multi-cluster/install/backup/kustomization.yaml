@@ -13,3 +13,4 @@ patchesStrategicMerge:
   # - patches/backup_auto_dumpall.yaml
   # - patches/backup_manual_base.yaml
   # - patches/backup_manual_dumpall.yaml
+  - patches/image_pull_secret_names.yaml

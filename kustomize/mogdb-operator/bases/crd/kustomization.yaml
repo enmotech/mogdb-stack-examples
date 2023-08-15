@@ -3,6 +3,7 @@
 # It should be run by config/default
 resources:
   - mogdb.enmotech.io_mogdbclusters.yaml
+  - mogdb.enmotech.io_mogdbdatabases.yaml
   - mogdb.enmotech.io_mogdbpodtemplates.yaml
   - mogdb.enmotech.io_mogdbclustertemplates.yaml
   #+kubebuilder:scaffold:crdkustomizeresource

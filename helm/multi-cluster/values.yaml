@@ -113,7 +113,7 @@ templates:
     url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544
   # specify containers' names and imagePullPolicy
   images:
-    imagePullPolicy: IfNotPresent
+    imagePullPolicy: Always
     mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
     initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
     exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0

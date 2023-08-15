@@ -175,7 +175,7 @@ cat >"$kubeconfig_path" <<EOF
 apiVersion: v1
 kind: Config
 preferences: {}
-current-context: ${src_context}
+current-context: ${src_namespace}
 users:
 - name: $cluster-${service_account}
   user:
@@ -186,21 +186,21 @@ clusters:
     server: ${apiserver_addr}
     certificate-authority-data: ${sa_cert}
 contexts:
-- name: ${src_context}
+- name: ${src_namespace}
   context:
     cluster: ${cluster}
     user: $cluster-${service_account}
 EOF
 
 # create secret to control plane
-output_secret=$(echo "$src_context" | tr '_' '-')
+output_secret=$(echo "$src_namespace" | tr '_' '-')
 echo "Creating secret $output_secret"
 
 kubectl $dest_kubeconfig_opt $dest_context_opt $dest_namespace_opt delete secret $output_secret || true
 kubectl $dest_kubeconfig_opt $dest_context_opt $dest_namespace_opt create secret generic $output_secret --from-file=$kubeconfig_path
 
 # create client config to control plane
-clientconfig_name=$(echo "$src_context" | tr '_' '-')
+clientconfig_name=$(echo "$src_namespace" | tr '_' '-')
 clientconfig_path="${output_dir}/${clientconfig_name}.yaml"
 echo "Creating ClientConfig $clientconfig_path"
 cat >"$clientconfig_path" <<EOF
@@ -209,7 +209,7 @@ kind: KubeClientConfig
 metadata:
   name: ${clientconfig_name}
 spec:
-  contextName: ${src_context}
+  contextName: ${src_namespace}
   kubeConfigSecret:
     name: ${output_secret}
     namespace: ${dest_namespace}

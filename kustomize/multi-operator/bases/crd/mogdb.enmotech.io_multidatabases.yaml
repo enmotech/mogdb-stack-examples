@@ -82,16 +82,20 @@ spec:
                 description: Database is database spec.
                 properties:
                   alterOption:
-                    description: 'AlterOption use alterOption if you need to alter to the database. Instead of modifying the create option of the database. More info: https://docs.mogdb.io/zh/mogdb/v5.0/ALTER-DATABASE'
+                    description: AlterOption use alterOption if you need to alter the database. Instead of modifying the Option. More info see https://docs.mogdb.io/zh/mogdb/v5.0/ALTER-DATABASE
                     type: string
                   name:
-                    description: Name is the name of the database.
+                    description: 'Name is the name of the database. More create table info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-DATABASE'
+                    maxLength: 63
+                    minLength: 1
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                     type: string
                   option:
                     description: 'Option are additional option of the database. More info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-DATABASE'
                     type: string
                   source:
                     description: Source points to the database you want to rename.
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                     type: string
                 type: object
             type: object

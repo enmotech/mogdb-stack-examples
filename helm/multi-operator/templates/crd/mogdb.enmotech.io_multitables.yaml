@@ -15,414 +15,150 @@ spec:
     singular: multitable
   scope: Namespaced
   versions:
-    - additionalPrinterColumns:
-        - jsonPath: .status.phase
-          name: status
-          type: string
-        - jsonPath: .status.current.name
-          name: db
-          type: string
-      name: v1
-      schema:
-        openAPIV3Schema:
-          description: MultiTable defines multi cluster multi table
-          properties:
-            apiVersion:
-              description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-              type: string
-            kind:
-              description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-              type: string
-            metadata:
-              type: object
-            spec:
-              properties:
-                cluster:
-                  description: Cluster points to the multi cluster where the table in.
+  - additionalPrinterColumns:
+    - jsonPath: .status.phase
+      name: status
+      type: string
+    - jsonPath: .status.current.name
+      name: db
+      type: string
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: MultiTable defines multi cluster multi table
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              cluster:
+                description: Cluster points to the multi cluster where the table in.
+                properties:
+                  apiVersion:
+                    description: API version of the referent.
+                    type: string
+                  fieldPath:
+                    description: 'If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.'
+                    type: string
+                  kind:
+                    description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                    type: string
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                    type: string
+                  namespace:
+                    description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                    type: string
+                  resourceVersion:
+                    description: 'Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
+                    type: string
+                  uid:
+                    description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                    type: string
+                type: object
+              dataCenters:
+                description: DataCenters is a list of the DCs in the cluster.
+                items:
                   properties:
-                    apiVersion:
-                      description: API version of the referent.
-                      type: string
-                    fieldPath:
-                      description: 'If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.'
-                      type: string
-                    kind:
-                      description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                    kubeContextName:
+                      description: KubeContextName points to kubeClientConfig which is used to connect to the data center.
                       type: string
                     name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                       type: string
                     namespace:
-                      description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
                       type: string
-                    resourceVersion:
-                      description: 'Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
-                      type: string
-                    uid:
-                      description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                    region:
                       type: string
                   type: object
-                dataCenters:
-                  description: DataCenters is a list of the DCs in the cluster.
-                  items:
-                    properties:
-                      kubeContextName:
-                        description: KubeContextName points to kubeClientConfig which is used to connect to the data center.
-                        type: string
-                      name:
-                        type: string
-                      namespace:
-                        type: string
-                      region:
-                        type: string
-                    type: object
-                  type: array
-                template:
-                  description: Table is table spec.
+                type: array
+              template:
+                description: Table is table spec.
+                properties:
+                  alterDefinition:
+                    description: AlterDefinition use alterOption if you need to alter the table. Instead of modifying the definition. More info see https://docs.mogdb.io/zh/mogdb/v5.0/ALTER-TABLE
+                    type: string
+                  database:
+                    description: Database is the database name where table in.
+                    maxLength: 63
+                    minLength: 1
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                    type: string
+                  definition:
+                    description: 'Definition is the definition of the table. More info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
+                    type: string
+                  name:
+                    description: 'Name is the name of the table. More create table info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
+                    maxLength: 63
+                    minLength: 1
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                    type: string
+                  schema:
+                    default: public
+                    description: 'Schema is the schema of the table. More create table info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
+                    maxLength: 63
+                    minLength: 1
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                    type: string
+                  source:
+                    description: Source points to the table you want to rename.
+                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                    type: string
+                  tableType:
+                    description: 'TableType is the type of table. Support: UNLOGGED, LOCAL TEMP, GLOBAL TEMP.'
+                    enum:
+                    - UNLOGGED
+                    - LOCAL TEMP
+                    - GLOBAL TEMP
+                    type: string
+                type: object
+            required:
+            - cluster
+            type: object
+          status:
+            properties:
+              current:
+                type: string
+              dataCenters:
+                description: DataCenters is a list of the DC's status in the cluster.
+                items:
                   properties:
-                    TableConstraints:
-                      description: TableConstraints is a list of table's constraint.
-                      items:
-                        properties:
-                          name:
-                            description: Name is the name of the table constraint.
-                            type: string
-                          option:
-                            description: Option is the option of the table constraint.
-                            type: string
-                          options:
-                            description: Value is the value of the table constraint.
-                            type: string
-                        required:
-                          - name
-                          - options
-                        type: object
-                      type: array
-                    autoIncrement:
-                      description: AutoIncrement
+                    kubeContextName:
+                      description: KubeContextName points to kubeClientConfig which is used to connect to the data center.
                       type: string
-                    collate:
-                      description: DefaultCollate The default collate for this table, only support when database's mode is 'B'.
-                      type: string
-                    columns:
-                      description: Columns are various columns of the table.
-                      items:
-                        properties:
-                          ColumnConstraints:
-                            description: ColumnConstraints is a list of column's constraint.
-                            items:
-                              properties:
-                                name:
-                                  description: Name is the name of the column constraint.
-                                  type: string
-                                option:
-                                  description: Option is the option of the column constraint.
-                                  type: string
-                                options:
-                                  description: Value is the value of the column constraint.
-                                  type: string
-                              required:
-                                - options
-                              type: object
-                            type: array
-                          characterSet:
-                            description: CharacterSet only support when database's mode is 'B'.
-                            type: string
-                          collate:
-                            description: Collate is the collation of the column.
-                            type: string
-                          compressMode:
-                            description: 'CompressMode is the compress mode of the column. Support: "DELTA" "PREFIX" "NUMSTR" "DICTIONARY" "NOCOMPRESS".'
-                            type: string
-                          dataType:
-                            description: DataType is the data type of the column.
-                            type: string
-                          name:
-                            description: Name is the name of the column.
-                            type: string
-                        required:
-                          - dataType
-                          - name
-                        type: object
-                      type: array
-                    comment:
-                      description: Comment
-                      type: string
-                    commitType:
-                      description: 'CommitType The table commit type. Support: "DROP" "DELETE ROWS" "PRESERVE ROWS".'
-                      type: string
-                    compress:
-                      description: Compress
-                      type: boolean
-                    database:
-                      description: Database is the name of the database.
-                      type: string
-                    defaultCharacterSet:
-                      description: DefaultCharacterSet The default CharacterSet for this table, only support when database's mode is 'B'.
-                      type: string
-                    like:
-                      description: Like points to the table you want to like.
-                      properties:
-                        excluding:
-                          description: Excluding is the excluding like options list.
-                          items:
-                            type: string
-                          type: array
-                        including:
-                          description: Including is the including like options list.
-                          items:
-                            type: string
-                          type: array
-                        source:
-                          description: Source points to the source table.
-                          type: string
-                      required:
-                        - source
-                      type: object
                     name:
-                      description: 'Name is the name of the table. More create table info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
                       type: string
-                    options:
-                      additionalProperties:
-                        anyOf:
-                          - type: integer
-                          - type: string
-                        x-kubernetes-int-or-string: true
-                      description: 'Options are various parameters of the table. More info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
-                      type: object
-                    source:
-                      description: Source points to the table you want to rename.
+                    namespace:
                       type: string
-                    tableSpace:
-                      description: TableSpace
+                    region:
                       type: string
-                    temporary:
-                      description: 'Temporary The type of temporary table created. Support: "LOCAL" "GLOBAL".'
-                      type: string
-                    unlogged:
-                      description: UnLogged whether to create un-logged table.
-                      type: boolean
-                  required:
-                    - database
-                    - name
-                  type: object
-              required:
-                - cluster
-              type: object
-            status:
-              properties:
-                conditions:
-                  items:
-                    description: "Condition contains details for one aspect of the current state of this API Resource. --- This struct is intended for direct use as an array at the field path .status.conditions.  For example, \n \ttype FooStatus struct{ \t    // Represents the observations of a foo's current state. \t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\" \t    // +patchMergeKey=type \t    // +patchStrategy=merge \t    // +listType=map \t    // +listMapKey=type \t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"` \n \t    // other fields \t}"
-                    properties:
-                      lastTransitionTime:
-                        description: lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
-                        format: date-time
-                        type: string
-                      message:
-                        description: message is a human readable message indicating details about the transition. This may be an empty string.
-                        maxLength: 32768
-                        type: string
-                      observedGeneration:
-                        description: observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
-                        format: int64
-                        minimum: 0
-                        type: integer
-                      reason:
-                        description: reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
-                        maxLength: 1024
-                        minLength: 1
-                        pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
-                        type: string
-                      status:
-                        description: status of the condition, one of True, False, Unknown.
-                        enum:
-                          - "True"
-                          - "False"
-                          - Unknown
-                        type: string
-                      type:
-                        description: type of condition in CamelCase or in foo.example.com/CamelCase. --- Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important. The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
-                        maxLength: 316
-                        pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
-                        type: string
-                    required:
-                      - lastTransitionTime
-                      - message
-                      - reason
-                      - status
-                      - type
-                    type: object
-                  type: array
-                current:
-                  properties:
-                    cluster:
-                      description: Cluster points to the mogdb cluster where the table in.
+                    status:
                       properties:
-                        apiVersion:
-                          description: API version of the referent.
+                        current:
                           type: string
-                        fieldPath:
-                          description: 'If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.'
+                        phase:
+                          description: The phase of a MogdbTable is a simple, high-level summary of where the MogdbTable is in its lifecycle.
                           type: string
-                        kind:
-                          description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-                          type: string
-                        name:
-                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
-                          type: string
-                        namespace:
-                          description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                          type: string
-                        resourceVersion:
-                          description: 'Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
-                          type: string
-                        uid:
-                          description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                        revision:
+                          description: Revision Identifies the databases that have been installed.
                           type: string
                       type: object
-                    table:
-                      description: Table is the spec of the table.
-                      properties:
-                        TableConstraints:
-                          description: TableConstraints is a list of table's constraint.
-                          items:
-                            properties:
-                              name:
-                                description: Name is the name of the table constraint.
-                                type: string
-                              option:
-                                description: Option is the option of the table constraint.
-                                type: string
-                              options:
-                                description: Value is the value of the table constraint.
-                                type: string
-                            required:
-                              - name
-                              - options
-                            type: object
-                          type: array
-                        autoIncrement:
-                          description: AutoIncrement
-                          type: string
-                        collate:
-                          description: DefaultCollate The default collate for this table, only support when database's mode is 'B'.
-                          type: string
-                        columns:
-                          description: Columns are various columns of the table.
-                          items:
-                            properties:
-                              ColumnConstraints:
-                                description: ColumnConstraints is a list of column's constraint.
-                                items:
-                                  properties:
-                                    name:
-                                      description: Name is the name of the column constraint.
-                                      type: string
-                                    option:
-                                      description: Option is the option of the column constraint.
-                                      type: string
-                                    options:
-                                      description: Value is the value of the column constraint.
-                                      type: string
-                                  required:
-                                    - options
-                                  type: object
-                                type: array
-                              characterSet:
-                                description: CharacterSet only support when database's mode is 'B'.
-                                type: string
-                              collate:
-                                description: Collate is the collation of the column.
-                                type: string
-                              compressMode:
-                                description: 'CompressMode is the compress mode of the column. Support: "DELTA" "PREFIX" "NUMSTR" "DICTIONARY" "NOCOMPRESS".'
-                                type: string
-                              dataType:
-                                description: DataType is the data type of the column.
-                                type: string
-                              name:
-                                description: Name is the name of the column.
-                                type: string
-                            required:
-                              - dataType
-                              - name
-                            type: object
-                          type: array
-                        comment:
-                          description: Comment
-                          type: string
-                        commitType:
-                          description: 'CommitType The table commit type. Support: "DROP" "DELETE ROWS" "PRESERVE ROWS".'
-                          type: string
-                        compress:
-                          description: Compress
-                          type: boolean
-                        database:
-                          description: Database is the name of the database.
-                          type: string
-                        defaultCharacterSet:
-                          description: DefaultCharacterSet The default CharacterSet for this table, only support when database's mode is 'B'.
-                          type: string
-                        like:
-                          description: Like points to the table you want to like.
-                          properties:
-                            excluding:
-                              description: Excluding is the excluding like options list.
-                              items:
-                                type: string
-                              type: array
-                            including:
-                              description: Including is the including like options list.
-                              items:
-                                type: string
-                              type: array
-                            source:
-                              description: Source points to the source table.
-                              type: string
-                          required:
-                            - source
-                          type: object
-                        name:
-                          description: 'Name is the name of the table. More create table info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
-                          type: string
-                        options:
-                          additionalProperties:
-                            anyOf:
-                              - type: integer
-                              - type: string
-                            x-kubernetes-int-or-string: true
-                          description: 'Options are various parameters of the table. More info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
-                          type: object
-                        source:
-                          description: Source points to the table you want to rename.
-                          type: string
-                        tableSpace:
-                          description: TableSpace
-                          type: string
-                        temporary:
-                          description: 'Temporary The type of temporary table created. Support: "LOCAL" "GLOBAL".'
-                          type: string
-                        unlogged:
-                          description: UnLogged whether to create un-logged table.
-                          type: boolean
-                      required:
-                        - database
-                        - name
-                      type: object
-                  required:
-                    - cluster
-                    - table
                   type: object
-                phase:
-                  description: The phase of a MultiTable is a simple, high-level summary of where the MultiTable is in its lifecycle.
-                  type: string
-              type: object
-          type: object
-      served: true
-      storage: true
-      subresources:
-        status: {}
+                type: array
+              phase:
+                description: The phase of a MultiTable is a simple, high-level summary of where the MultiTable is in its lifecycle.
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
 status:
   acceptedNames:
     kind: ""

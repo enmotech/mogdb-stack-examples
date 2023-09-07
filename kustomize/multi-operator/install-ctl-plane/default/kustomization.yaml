@@ -10,6 +10,8 @@ commonLabels:
 
 # Add namespace to all resources.
 namespace: control-plane
+namespace: control-plane
+
 # Value of this field is prepended to the names of all resources
 # e.g. a deployment named "wordpress" becomes "alices-wordpress".
 # Note that it should also match with the prefix (text before '-') of the namespace field above.
@@ -23,7 +25,7 @@ resources:
 images:
   - name: controller
     newName: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/multi-operator
-    newTag: dev.009
+    newTag: 3.0.0
 
 patchesStrategicMerge:
   # Customize the container of the operator.

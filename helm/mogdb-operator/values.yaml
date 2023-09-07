@@ -22,7 +22,7 @@ operator:
       cpu: 500m
       memory: 500Mi
   imagePullPolicy: IfNotPresent
-  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator:dev.009
+  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-operator:3.0.0
 
 container:
   resources:
@@ -57,7 +57,7 @@ license:
 rclone:
   s3:
     provider: Minio
-    endpoint: http://10.96.107.225:9000
+    endpoint: http://172.23.1.154:9000
     access_key: root
     secret_key: root@123
 

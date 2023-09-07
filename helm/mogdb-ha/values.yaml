@@ -39,7 +39,7 @@ ha:
       cpu: 500m
       memory: 500Mi
   imagePullPolicy: IfNotPresent
-  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha:dev.009
+  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-ha:3.0.0
 
 etcd:
   resources:

@@ -12,4 +12,4 @@ spec:
         rcloneStorage:
           name: s3-remote
           directory: backup
-    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0
+    image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:dev.009

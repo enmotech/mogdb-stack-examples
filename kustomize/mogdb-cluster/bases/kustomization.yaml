@@ -1,0 +1,4 @@
+namespace: mogdb-operator-system
+
+resources:
+  - mogdb_cluster.yaml

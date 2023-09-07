@@ -9,7 +9,7 @@ commonLabels:
   app: mogdb-operator
 
 # Add namespace to all resources.
-namespace: mogdb-operator-system
+namespace: data-plane1
 
 # Value of this field is prepended to the names of all resources
 # e.g. a deployment named "wordpress" becomes "alices-wordpress".

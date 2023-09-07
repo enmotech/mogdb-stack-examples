@@ -6,12 +6,12 @@ metadata:
 spec:
   dataCenters:
     - name: dc1
-      namespace: mogdb-operator-system
+      namespace: data-plane1
       region: "dc1"
       dataCenterRole: primary
       kubeContextName: "data-plane1"
     - name: dc2
-      namespace: mogdb-operator-system
+      namespace: data-plane2
       region: "dc2"
       dataCenterRole: standby
       kubeContextName: "data-plane2"

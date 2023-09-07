@@ -6,8 +6,6 @@ metadata:
 spec:
   template:
     replicas: 2
-    readPort: 30012
-    writePort: 30013
     ha:
       scope: mogdb-cluster
       url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544

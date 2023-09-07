@@ -7,6 +7,6 @@ data:
     [s3-remote]
     type=s3
     provider=Minio
-    endpoint=http://10.96.107.225:9000
-    access_key_id=root
-    secret_access_key=root@123
+    endpoint=http://172.23.1.154:9000
+    access_key_id=46Xol1MGW0bRA0NFpSIa
+    secret_access_key=fwjx1KZmhrUezGlSUNiaHeez9caXMYeJzuUtHeks

@@ -3,6 +3,7 @@
 # It should be run by config/default
 resources:
   - mogdb.enmotech.io_multiclusters.yaml
+  - mogdb.enmotech.io_multiusers.yaml
   - mogdb.enmotech.io_multitables.yaml
   - mogdb.enmotech.io_multidatabases.yaml
   - mogdb.enmotech.io_kubeclientconfigs.yaml

@@ -188,6 +188,32 @@ rules:
   - apiGroups:
       - mogdb.enmotech.io
     resources:
+      - mogdbusers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbusers/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbusers/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
       - multiclusters
     verbs:
       - create
@@ -259,6 +285,32 @@ rules:
       - mogdb.enmotech.io
     resources:
       - multitables/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiusers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiusers/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiusers/status
     verbs:
       - get
       - patch

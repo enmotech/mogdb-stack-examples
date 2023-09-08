@@ -77,7 +77,7 @@ spec:
                       type: string
                   type: object
                 type: array
-              template:
+              table:
                 description: Table is table spec.
                 properties:
                   alterDefinition:
@@ -96,18 +96,15 @@ spec:
                     description: 'Name is the name of the table. More create table info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
                     maxLength: 63
                     minLength: 1
-                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                     type: string
                   schema:
                     default: public
                     description: 'Schema is the schema of the table. More create table info: https://docs.mogdb.io/zh/mogdb/v5.0/CREATE-TABLE'
                     maxLength: 63
                     minLength: 1
-                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                     type: string
                   source:
                     description: Source points to the table you want to rename.
-                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                     type: string
                   tableType:
                     description: 'TableType is the type of table. Support: UNLOGGED, LOCAL TEMP, GLOBAL TEMP.'

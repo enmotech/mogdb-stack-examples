@@ -69,5 +69,5 @@ bash $stack_examples_path/join-to-control-plane.sh \
 kubectl create ns mogdb-operator-system
 kubectl apply --server-side -k $stack_examples_path/kustomize/multi-cluster/install/default
 kubectl get pods -A
-kubectl delete -k kustomize/multi-cluster/install/default
-kubectl apply --server-side -k kustomize/multi-cluster/install/default
+# kubectl delete -k kustomize/multi-cluster/install/default
+# kubectl apply --server-side -k kustomize/multi-cluster/install/default

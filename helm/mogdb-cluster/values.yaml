@@ -2,36 +2,50 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# The number of pods. This updates replicas filed.
 replica: 2
+# customize defination labels.
+labels: {}
+# customize defination annotations.
+annotations: {}
 
+# specify compute and volume resources for mogdb pod.
 mogdb:
   resources:
+    # Limits describes the maximum amount of compute resources allowed.
     limits:
       cpu: 500m
       memory: 1Gi
+    # Requests describes the minimum amount of compute resources required.
     requests:
       cpu: 500m
       memory: 1Gi
   volume:
+    # specify storage size for pod volume pvc. 
     dataVolumeSize: 1Gi
+    # specify storage size for pod backup pvc. 
     backupVolumeSize: 1Gi
+    # specify storageClassName for pod volume pvc and pod backup pvc. 
     storageClass: default
 
+# specify readPort and writePort for MogdbCluster.
 service:
   readPort: 30012
   writePort: 30013
 
+# specify ha-server url(domain name and port) for mogdb-ha.
 ha:
   scope: default
   url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544
 
+# specify containers' names and imagePullPolicy
 images:
   imagePullPolicy: IfNotPresent
   initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
   mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
   exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0
 
-
+# specify a backup job for mogdb
 backup: {}
 #backup:
 #  auto:
@@ -48,6 +62,7 @@ backup: {}
 #    successfulJobsHistoryLimit: 7
 #  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0
 
+# specify a restore job for mogdb
 restore: {}
 #restore:
 #  restoreId: "001"

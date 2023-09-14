@@ -3,6 +3,14 @@ kind: Deployment
 metadata:
   name: grafana
   namespace: {{ .Release.Namespace }}
+  {{- if .Values.labels }}
+  labels:
+  {{- toYaml .Values.labels | nindent 4 }}
+  {{- end }}
+  {{- if .Values.annotations }}
+  annotations:
+  {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
 spec:
   replicas: 1
   selector:

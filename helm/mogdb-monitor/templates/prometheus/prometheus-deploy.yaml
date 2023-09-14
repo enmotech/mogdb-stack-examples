@@ -12,6 +12,15 @@ metadata:
 
     app: prometheus
 
+    {{- if .Values.labels }}
+    {{- toYaml .Values.labels | nindent 4 }}
+    {{- end }}
+    
+  {{- if .Values.annotations }}
+  annotations:
+  {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
+
 spec:
 
   replicas: 1
@@ -43,6 +52,15 @@ spec:
       labels:
 
         app: prometheus
+
+        {{- if .Values.labels }}
+        {{- toYaml .Values.labels | nindent 8 }}
+        {{- end }}
+
+      {{- if .Values.annotations }}
+      annotations:
+      {{- toYaml .Values.annotations | nindent 8 }}
+      {{- end }}
 
     spec:
 

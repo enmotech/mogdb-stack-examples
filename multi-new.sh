@@ -71,3 +71,5 @@ kubectl apply --server-side -k $stack_examples_path/kustomize/multi-cluster/inst
 kubectl get pods -A
 # kubectl delete -k kustomize/multi-cluster/install/default
 # kubectl apply --server-side -k kustomize/multi-cluster/install/default
+
+

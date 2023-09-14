@@ -2,76 +2,121 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# customize defination labels.
+labels: {}
+# customize defination annotations.
+annotations: {}
+
+# specify config for MultiCluster.dataCenters.primaryDC.
 primaryDC:
+  # name of primaryDC.
   name: dc1
+  # namespace of primaryDC.
   namespace: data-plane1
+  # region of primaryDC.
   region: "dc1"
+  # kubeContextName of primaryDC.
   kubeContextName: "data-plane1"
   spec:
+    # The number of primaryDC-pods.
     replica: 2
+    # The default readPort of primaryDC.
     readPort: 30012
+    # The default writePort of primaryDC.
     writePort: 30013
+    # specify compute and volume resources for mogdb pod.
     mogdb:
       resources:
+        # Limits describes the maximum amount of compute resources allowed.
         limits:
           cpu: 500m
           memory: 1Gi
+        # Requests describes the minimum amount of compute resources required.
         requests:
           cpu: 500m
           memory: 1Gi
       volume:
+        # specify storage size for pod volume pvc. 
         dataVolumeSize: 2Gi
+        # specify storage size for pod backup pvc. 
         backupVolumeSize: 2Gi
+        # specify storageClassName for pod volume pvc and pod backup pvc. 
         storageClass: default
 
+# specify config for MultiCluster.dataCenters.standbyDCs.
 standbyDCs:
+    # The name of standbyDCs-pods.
   - name: dc2
+    # namespace of standbyDCs.
     namespace: data-plane2
+    # region of standbyDCs.
     region: "dc2"
+    # kubeContextName of standbyDCs.
     kubeContextName: "data-plane2"
     spec:
+      # The number of standbyDCs-pods.
       replica: 2
+      # The default readPort of standbyDCs.
       readPort: 30014
+      # The default writePort of standbyDCs.
       writePort: 30015
+      # specify compute and volume resources for mogdb pod.
       mogdb:
         resources:
+          # Limits describes the maximum amount of compute resources allowed.
           limits:
             cpu: 500m
             memory: 1Gi
+          # Requests describes the minimum amount of compute resources required.
           requests:
             cpu: 500m
             memory: 1Gi
         volume:
+          # specify storage size for pod volume pvc. 
           dataVolumeSize: 1Gi
+          # specify storage size for pod backup pvc. 
           backupVolumeSize: 1Gi
+          # specify storageClassName for pod volume pvc and pod backup pvc. 
           storageClass: default
 
-
+# specify config for MultiCluster.templates.
 templates:
+  # The number of pods.
   replica: 2
   service:
+    # The readPort of standbyDCs.
     readPort: 30012
+    # The writePort of standbyDCs.
     writePort: 30013
+  # specify compute and volume resources for mogdb pod.
   mogdb:
     resources:
+      # Limits describes the maximum amount of compute resources allowed.
       limits:
         cpu: 500m
         memory: 1Gi
+      # Requests describes the minimum amount of compute resources required.
       requests:
         cpu: 500m
         memory: 1Gi
     volume:
+      # specify storage size for pod volume pvc. 
       dataVolumeSize: 1Gi
+      # specify storage size for pod backup pvc. 
       backupVolumeSize: 1Gi
+      # specify storageClassName for pod volume pvc and pod backup pvc. 
       storageClass: default
+  # specify ha-server url(domain name and port) for mogdb-ha.
   ha:
     url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544
+  # specify containers' names and imagePullPolicy
   images:
     imagePullPolicy: IfNotPresent
     mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
     initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
     exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0
 
+# specify a backup job for mogdb
 backup: {}
 #backup:
 #  auto:
@@ -88,6 +133,7 @@ backup: {}
 #    successfulJobsHistoryLimit: 7
 #  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/remote-client:3.0.0
 
+# specify a restore job for mogdb
 restore: {}
 #restore:
 #  restoreId: "001"

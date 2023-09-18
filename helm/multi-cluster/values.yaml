@@ -115,6 +115,17 @@ templates:
     mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
     initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
     exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0
+# specify config for rclone.
+rclone:
+  # s3-server name.
+  s3:
+    provider: Minio
+    # server url
+    endpoint: http://26.9.17.10:9000
+    # server username
+    access_key: minioadmin
+    # server password
+    secret_key: minioadmin
 
 # specify a backup job for mogdb
 backup: {}

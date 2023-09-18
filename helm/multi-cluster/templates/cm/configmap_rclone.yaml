@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "install.rcloneConfigmapName" . }}
+data:
+  rclone.conf: |
+    [s3-remote]
+    type=s3
+    provider={{ .Values.rclone.s3.provider }}
+    endpoint={{ .Values.rclone.s3.endpoint }}
+    access_key_id={{ .Values.rclone.s3.access_key }}
+    secret_access_key={{ .Values.rclone.s3.secret_key }}

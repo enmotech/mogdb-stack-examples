@@ -5,6 +5,13 @@ metadata:
     app.kubernetes.io/component: exporter
     app.kubernetes.io/name: kube-state-metrics
     app.kubernetes.io/version: 2.4.2
+    {{- if .Values.labels }}
+    {{- toYaml .Values.labels | nindent 4 }}
+    {{- end }}
+  {{- if .Values.annotations }}
+  annotations:
+  {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
   name: kube-state-metrics
   namespace: kube-system
 spec:

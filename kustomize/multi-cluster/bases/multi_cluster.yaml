@@ -6,8 +6,6 @@ metadata:
 spec:
   template:
     replicas: 2
-    readPort: 30012
-    writePort: 30013
     ha:
       scope: mogdb-cluster
       url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544
@@ -29,6 +27,6 @@ spec:
             requests:
               storage: 1Gi
       imagePullPolicy: IfNotPresent
-      image: swr.cn-north-4.myhuaweicloud.com/mogdb/mogdb:5.0.0
-      initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/init:5.0.0
+      image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+      initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
       exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0

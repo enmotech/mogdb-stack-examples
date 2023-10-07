@@ -2,24 +2,40 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# customize defination labels.
+labels: {}
+# customize defination annotations.
+annotations: {}
+
+# to enable/disable helm install multi-operator with CRD.
 withCRD: false
 
+# to enable/disable namespace model to install multi-operator.
 singleNamespace: false
 
+# to enable/disable multi-operator control-plane env.
 enableControl: true
 
+# to enable/disable enablePrometheusMonitor.
 enablePrometheusMonitor: true
 
+# imagePullSecrets is a list of references to secrets for pulling any images.
 imagePullSecrets: {}
+# the name of imagePullSecrets.
 imagePullSecretNames: []
 
+# specify config for operator container
 operator:
   resources:
+    # Limits describes the maximum amount of compute resources allowed.
     limits:
       cpu: 500m
       memory: 500Mi
+    # Requests describes the minimum amount of compute resources required.
     requests:
       cpu: 500m
       memory: 500Mi
+  # PullPolicy describes a policy for if/when to pull a container image.
   imagePullPolicy: IfNotPresent
-  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/multi-operator:dev.009
+  # container image name.
+  image: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/multi-operator:3.0.0

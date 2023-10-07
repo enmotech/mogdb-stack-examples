@@ -4,6 +4,13 @@ metadata:
   labels:
     app.kubernetes.io/component: exporter
     app.kubernetes.io/name: node-exporter
+    {{- if .Values.labels }}
+    {{- toYaml .Values.labels | nindent 4 }}
+    {{- end }}
+  {{- if .Values.annotations }}
+  annotations:
+  {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
   name: node-exporter
   namespace: {{ .Release.Namespace }}
 spec:

@@ -3,9 +3,17 @@ kind: Service
 metadata:
   name: grafana
   namespace: {{ .Release.Namespace }}
+  {{- if .Values.labels }}
+  labels:
+  {{- toYaml .Values.labels | nindent 4 }}
+  {{- end }}
+  
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/port:   '3000'
+    {{- if .Values.annotations }}
+    {{- toYaml .Values.annotations | nindent 4 }}
+    {{- end }}
 spec:
   selector:
     app: grafana

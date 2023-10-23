@@ -1,0 +1,104 @@
+{{- if .Values.enableWebhook }}
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ include "install.mutatingWebhookConfigName" . }}
+  labels:
+    {{- include "install.labels" . | indent 4 }}
+  annotations:
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "install.certificateName" . }}
+webhooks:
+  - name: multiuser.v1.mutate
+    rules:
+      - apiGroups:
+          - mogdb.enmotech.io
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - multiusers
+    clientConfig:
+      service:
+        path: /mutate-mogdb-enmotech-io-v1-multiuser
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "install.webhookServiceName" . }}
+    admissionReviewVersions:
+      - v1
+    sideEffects: None
+    timeoutSeconds: 5
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    reinvocationPolicy: IfNeeded
+  - name: multitable.v1.mutate
+    rules:
+      - apiGroups:
+          - mogdb.enmotech.io
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - multitables
+    clientConfig:
+      service:
+        path: /mutate-mogdb-enmotech-io-v1-multitable
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "install.webhookServiceName" . }}
+    admissionReviewVersions:
+      - v1
+    sideEffects: None
+    timeoutSeconds: 5
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    reinvocationPolicy: IfNeeded
+  - name: multidatabase.v1.mutate
+    rules:
+      - apiGroups:
+          - mogdb.enmotech.io
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - multidatabases
+    clientConfig:
+      service:
+        path: /mutate-mogdb-enmotech-io-v1-multidatabase
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "install.webhookServiceName" . }}
+    admissionReviewVersions:
+      - v1
+    sideEffects: None
+    timeoutSeconds: 5
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    reinvocationPolicy: IfNeeded
+  - name: multicluster.v1.mutate
+    rules:
+      - apiGroups:
+          - mogdb.enmotech.io
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - multiclusters
+    clientConfig:
+      service:
+        path: /mutate-mogdb-enmotech-io-v1-multicluster
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "install.webhookServiceName" . }}
+    admissionReviewVersions:
+      - v1
+    sideEffects: None
+    timeoutSeconds: 5
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    reinvocationPolicy: IfNeeded
+{{- end }}

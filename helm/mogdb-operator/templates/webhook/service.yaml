@@ -1,0 +1,16 @@
+{{- if .Values.enableWebhook }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "install.labels" . | indent 4 }}
+  namespace: {{ .Release.Namespace }}
+  name: {{ include "install.webhookServiceName" . }}
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: {{ .Values.webhookPort }}
+  selector:
+    {{- include "install.labels" . | indent 4 }}
+{{- end }}

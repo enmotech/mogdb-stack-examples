@@ -37,12 +37,13 @@ spec:
                 description: Backup extra specification
                 properties:
                   auto:
+                    description: Auto is the scheduled auto backup spec. Only one of Auto and Manual can be selected.
                     properties:
                       backupFileHistoryLimit:
                         format: int32
                         type: integer
                       backupSchedules:
-                        description: BackupSchedules defines a scheduled backup.
+                        description: BackupSchedules defines the backup schedule. Full and Incremental backup types are supported
                         properties:
                           full:
                             type: string
@@ -50,14 +51,19 @@ spec:
                             type: string
                         type: object
                       backupType:
+                        description: 'BackupType Support: dumpall, basebackup.'
+                        enum:
+                        - dumpall
+                        - basebackup
                         type: string
                       failedJobsHistoryLimit:
                         format: int32
                         type: integer
-                      name:
-                        description: The image name to use for gs_basebackup containers.
+                      id:
+                        description: Id for this backup.
                         type: string
                       storageProvider:
+                        description: StorageProvider is the storage spec for this backup. Only `rclone` is supported currently.
                         properties:
                           rcloneStorage:
                             properties:
@@ -74,18 +80,24 @@ spec:
                       suspend:
                         type: boolean
                     required:
-                    - name
+                    - id
                     type: object
                   image:
                     type: string
                   manual:
+                    description: Manual is the single manual backup spec. Only one of Auto and Manual can be selected.
                     properties:
                       backupType:
+                        description: 'BackupType Support: dumpall, basebackup.'
+                        enum:
+                        - dumpall
+                        - basebackup
                         type: string
                       id:
-                        description: The image name to use for gs_basebackup containers.
+                        description: Id for this backup.
                         type: string
                       storageProvider:
+                        description: StorageProvider is the storage spec for this backup. Only `rclone` is supported currently.
                         properties:
                           rcloneStorage:
                             properties:
@@ -104,10 +116,16 @@ spec:
                 description: DataSource defines the source of the MogDB data directory for a new MogDB cluster
                 properties:
                   backupType:
+                    description: 'BackupType the backup type. Support: dumpall, basebackup.'
+                    enum:
+                    - dumpall
+                    - basebackup
                     type: string
                   clusterName:
+                    description: ClusterName is the name of the data source cluster.
                     type: string
                   storageProvider:
+                    description: StorageProvider is the storage spec for this restore. Only `rclone` is supported currently.
                     properties:
                       rcloneStorage:
                         properties:
@@ -119,16 +137,104 @@ spec:
                         type: object
                     type: object
                   target:
+                    description: Target to restore.
                     type: string
                   type:
+                    description: 'Type the restore type. Support: time, object.'
+                    enum:
+                    - time
+                    - object
                     type: string
                 type: object
               ha:
                 properties:
                   scope:
+                    description: Scope is scope of this mogdb cluster.
                     type: string
                   url:
+                    description: URL is the url of the ha service.
                     type: string
+                type: object
+              hostNetwork:
+                description: HostNetwork Use the host's network namespace.
+                type: boolean
+              ingress:
+                description: Ingress is the ingress spec for cluster.
+                properties:
+                  haProxy:
+                    description: HAProxy is the spec for ingress controller HAProxy.
+                    properties:
+                      readPort:
+                        description: ReadPort Represents the service with read port.
+                        format: int32
+                        type: integer
+                      tcpConfigMap:
+                        description: "ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, \"must refer only to types A and B\" or \"UID not honored\" or \"name must be restricted\".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. \n Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 ."
+                        properties:
+                          apiVersion:
+                            description: API version of the referent.
+                            type: string
+                          fieldPath:
+                            description: 'If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.'
+                            type: string
+                          kind:
+                            description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                            type: string
+                          name:
+                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                            type: string
+                          namespace:
+                            description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                            type: string
+                          resourceVersion:
+                            description: 'Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
+                            type: string
+                          uid:
+                            description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                            type: string
+                        type: object
+                      writePort:
+                        description: WritePort Represents the service with write port.
+                        format: int32
+                        type: integer
+                    type: object
+                  nginx:
+                    description: Nginx is the spec for ingress controller Nginx.
+                    properties:
+                      readPort:
+                        description: ReadPort Represents the service with read port.
+                        format: int32
+                        type: integer
+                      tcpConfigMap:
+                        description: "ObjectReference contains enough information to let you inspect or modify the referred object. --- New uses of this type are discouraged because of difficulty describing its usage when embedded in APIs.  1. Ignored fields.  It includes many fields which are not generally honored.  For instance, ResourceVersion and FieldPath are both very rarely valid in actual usage.  2. Invalid usage help.  It is impossible to add specific help for individual usage.  In most embedded usages, there are particular     restrictions like, \"must refer only to types A and B\" or \"UID not honored\" or \"name must be restricted\".     Those cannot be well described when embedded.  3. Inconsistent validation.  Because the usages are different, the validation rules are different by usage, which makes it hard for users to predict what will happen.  4. The fields are both imprecise and overly precise.  Kind is not a precise mapping to a URL. This can produce ambiguity     during interpretation and require a REST mapping.  In most cases, the dependency is on the group,resource tuple     and the version of the actual struct is irrelevant.  5. We cannot easily change it.  Because this type is embedded in many locations, updates to this type     will affect numerous schemas.  Don't make new APIs embed an underspecified API type they do not control. \n Instead of using this type, create a locally provided and used type that is well-focused on your reference. For example, ServiceReferences for admission registration: https://github.com/kubernetes/api/blob/release-1.17/admissionregistration/v1/types.go#L533 ."
+                        properties:
+                          apiVersion:
+                            description: API version of the referent.
+                            type: string
+                          fieldPath:
+                            description: 'If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.'
+                            type: string
+                          kind:
+                            description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                            type: string
+                          name:
+                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                            type: string
+                          namespace:
+                            description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                            type: string
+                          resourceVersion:
+                            description: 'Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
+                            type: string
+                          uid:
+                            description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                            type: string
+                        type: object
+                      writePort:
+                        description: WritePort Represents the service with write port.
+                        format: int32
+                        type: integer
+                    type: object
                 type: object
               paused:
                 description: Suspends the reconciliation of changes made to the MogDBCluster spec.
@@ -3636,20 +3742,17 @@ spec:
                     type: array
                 type: object
               postgresConf:
-                description: A map[string]string that will be passed to file.
+                description: PostgresConf is k-v pairs to describe the config of mogdb.
                 properties:
                   confPairs:
                     additionalProperties:
-                      anyOf:
-                      - type: integer
-                      - type: string
-                      x-kubernetes-int-or-string: true
+                      type: string
                     type: object
                 required:
                 - confPairs
                 type: object
               readPort:
-                description: Represents the service with read port.
+                description: ReadPort is the port of mogdb read service.
                 format: int32
                 type: integer
               replicas:
@@ -3662,10 +3765,16 @@ spec:
                     description: DataSource defines the source of the MogDB data directory for a new MogDB cluster
                     properties:
                       backupType:
+                        description: 'BackupType the backup type. Support: dumpall, basebackup.'
+                        enum:
+                        - dumpall
+                        - basebackup
                         type: string
                       clusterName:
+                        description: ClusterName is the name of the data source cluster.
                         type: string
                       storageProvider:
+                        description: StorageProvider is the storage spec for this restore. Only `rclone` is supported currently.
                         properties:
                           rcloneStorage:
                             properties:
@@ -3677,8 +3786,13 @@ spec:
                             type: object
                         type: object
                       target:
+                        description: Target to restore.
                         type: string
                       type:
+                        description: 'Type the restore type. Support: time, object.'
+                        enum:
+                        - time
+                        - object
                         type: string
                     type: object
                   image:
@@ -3686,8 +3800,6 @@ spec:
                     type: string
                   restoreId:
                     type: string
-                required:
-                - restoreId
                 type: object
               stopped:
                 type: boolean
@@ -3720,21 +3832,27 @@ spec:
                         type: string
                     type: object
                 type: object
-              useTemplate:
+              useTemplates:
                 description: UseTemplates list of `MogdbClusterTemplate` resource names which will merge with current `MogdbCluster` manifest.
                 items:
                   description: MogdbClusterUseTemplate defines UseTemplate section of MogdbCluster resource
                   properties:
                     mergeType:
+                      description: 'MergeType Support: override, fillempty'
+                      enum:
+                      - override
+                      - fillempty
                       type: string
                     name:
+                      description: Name is the name of CR mogdbClusterTemplate.
                       type: string
                     namespace:
+                      description: Namespace is the namespace of CR mogdbClusterTemplate.
                       type: string
                   type: object
                 type: array
               volumeSpec:
-                description: PVC extra specifiaction
+                description: PVC extra specification
                 properties:
                   emptyDir:
                     description: EmptyDir to use as data volume for og. EmptyDir represents a temporary directory that shares a pod's lifetime.
@@ -3884,7 +4002,7 @@ spec:
                     type: object
                 type: object
               writePort:
-                description: Represents the service with write port.
+                description: WritePort is the port of mogdb write service.
                 format: int32
                 type: integer
             type: object

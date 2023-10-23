@@ -3,17 +3,7 @@ common label
 */}}
 {{- define "install.labels" }}
 app: {{ .Chart.Name }}
-{{- end }}
-
-
-{{/*
-config map name
-*/}}
-{{- define "install.globalConfigmapName" }}
-{{- printf "%s-global-config" .Chart.Name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- define "install.rcloneConfigmapName" }}
-{{- printf "%s-rclone-config" .Chart.Name | trunc 63 | trimSuffix "-" }}
+name: {{ .Release.Name }}
 {{- end }}
 
 
@@ -21,7 +11,18 @@ config map name
 mogdb operator full name
 */}}
 {{- define "install.managerName" -}}
-{{- printf "%s-%s" .Chart.Name .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+
+{{/*
+config map name
+*/}}
+{{- define "install.globalConfigmapName" }}
+{{- printf "%s-global" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- define "install.rcloneConfigmapName" }}
+{{- printf "%s-rclone" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 
@@ -37,10 +38,10 @@ service account name
 secret name
 */}}
 {{- define "install.tokenSecretName" }}
-{{- printf "%s-token" .Chart.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-token" .Release.Name  | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- define "install.huaweiRegistrySecretName" }}
-{{- printf "%s-huawei-registry" .Chart.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-huawei-registry" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 
@@ -48,28 +49,21 @@ secret name
 role name
 */}}
 {{- define "install.roleName" }}
-{{- printf "%s-manager-role" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-manager" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- define "install.leaderElectionRoleName" }}
-{{- printf "%s-leader-election-role" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-leader-election" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-
-{{/*
-leader election role name
-*/}}
-{{- define "install.leaderRoleName" }}
-{{- printf "%s-leader-election-role" .Chart.Name | trunc 63 | trimSuffix "-" }}
-{{- end }}
 
 {{/*
 role binding name
 */}}
 {{- define "install.roleBindingName" }}
-{{- printf "%s-manager-rolebinding" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-manager" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- define "install.leaderElectionRoleBindingName" }}
-{{- printf "%s-leader-election-rolebinding" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-leader-election" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -80,8 +74,30 @@ leader role binding name
 {{- end }}
 
 {{/*
-Create the kind for role. Will be Role in single
-namespace mode or ClusterRole by default.
+admission webhook name
+*/}}
+{{- define "install.webhookServiceName" }}
+{{- printf "%s-webhook" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- define "install.mutatingWebhookConfigName" }}
+{{- printf "%s-webhook" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- define "install.validatingWebhookConfigName" }}
+{{- printf "%s-webhook" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- define "install.issuerName" }}
+{{- printf "%s-webhook" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- define "install.certificateName" }}
+{{- printf "%s-webhook" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- define "install.certSecretName" }}
+{{- printf "%s-webhook-cert" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+
+{{/*
+Create the kind for role. Will be Role in single namespace mode or ClusterRole by default.
 */}}
 {{- define "install.roleKind" -}}
 {{- if .Values.singleNamespace -}}
@@ -93,8 +109,7 @@ ClusterRole
 
 
 {{/*
-Create the kind for rolebindings. Will be RoleBinding in single
-namespace mode or ClusterRoleBinding by default.
+Create the kind for rolebindings. Will be RoleBinding in single namespace mode or ClusterRoleBinding by default.
 */}}
 {{- define "install.roleBindingKind" -}}
 {{- if .Values.singleNamespace -}}

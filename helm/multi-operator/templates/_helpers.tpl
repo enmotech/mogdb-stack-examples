@@ -4,6 +4,9 @@ common label
 {{- define "install.labels" }}
 app: {{ .Chart.Name }}
 name: {{ .Release.Name }}
+{{- if .Values.labels }}
+{{- toYaml .Values.labels }}
+{{- end }}
 {{- end }}
 
 

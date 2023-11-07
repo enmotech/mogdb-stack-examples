@@ -1,13 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "install.managerName" . }}
   namespace: {{ .Release.Namespace }}
+  name: {{ include "install.managerName" . }}
   labels:
     {{- include "install.labels" . | indent 4 }}
-    {{- if .Values.labels }}
-    {{- toYaml .Values.labels | nindent 4 }}
-    {{- end }}
   {{- if .Values.annotations }}
   annotations:
   {{- toYaml .Values.annotations | nindent 4 }}
@@ -21,9 +18,6 @@ spec:
     metadata:
       labels:
         {{- include "install.labels" . | indent 8 }}
-        {{- if .Values.labels }}
-        {{- toYaml .Values.labels | nindent 8 }}
-        {{- end }}
       {{- if .Values.annotations }}
       annotations:
       {{- toYaml .Values.annotations | nindent 8 }}
@@ -33,22 +27,33 @@ spec:
         - name: operator
           image: {{ required "operator.image is required" .Values.operator.image | quote }}
           imagePullPolicy: {{ .Values.operator.imagePullPolicy }}
-          env:
-            - name: NAMESPACE
-              value: {{ .Release.Namespace }}
-            - name: CONTROL_PLANE
-              value: "{{ .Values.enableControl }}"
+          {{- if .Values.enableWebhook }}
+          ports:
+            - protocol: TCP
+              name: webhook-server
+              containerPort: {{ .Values.webhookPort }}
+          volumeMounts:
+            - mountPath: /tmp/k8s-webhook-server/serving-certs
+              name: cert
+              readOnly: true
+          {{- end }}
           command:
             - /usr/local/bin/multi-operator
           args:
-            - "--leader-election"
-          {{- if .Values.singleNamespace }}
+            - "--debug={{ .Values.debug }}"
+            - "--webhook-port={{ .Values.webhookPort }}"
+            - "--enable-webhook={{ .Values.enableWebhook }}"
+            - "--enable-control={{ .Values.enableControl }}"
+            - "--leader-elect={{ .Values.enableLeaderElection }}"
+            - "--leader-election-id={{ .Values.leaderElectionID }}"
+            - "--zap-time-encoding=iso8601"
+            - "--health-probe-bind-address=:8081"
+            {{- if .Values.singleNamespace }}
             - "--namespace={{ .Release.Namespace }}"
-          {{- end }}
-          {{- if .Values.enablePrometheusMonitor }}
-            - "--health-probe-address=:8081"
-            - "--metrics-address=127.0.0.1:8080"
-          {{- end }}
+            {{- end }}
+            {{- if .Values.enablePrometheusMonitor }}
+            - "--metrics-bind-address=127.0.0.1:8080"
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /readyz
@@ -67,6 +72,13 @@ spec:
           resources:
         {{- toYaml .Values.operator.resources | nindent 12 }}
         {{- end }}
+      {{- if .Values.enableWebhook }}
+            volumes:
+              - name: cert
+                secret:
+                  defaultMode: 420
+                  secretName: {{ include "install.certSecretName" . }}
+            {{- end }}
       securityContext:
         runAsNonRoot: false
       terminationGracePeriodSeconds: 10

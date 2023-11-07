@@ -13,8 +13,19 @@ withCRD: false
 # to enable/disable namespace model to install multi-operator.
 singleNamespace: false
 
+# to enable/disable multi-operator debug mod.
+debug: true
+
+# to enable/disable multi-operator webhook mod.
+webhookPort: 9443
+enableWebhook: false
+
 # to enable/disable multi-operator control-plane env.
 enableControl: true
+
+# to enable/disable multi-operator leader election mod.
+enableLeaderElection: true
+leaderElectionID: 029c71aa.enmotech.io
 
 # to enable/disable enablePrometheusMonitor.
 enablePrometheusMonitor: true

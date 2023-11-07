@@ -24,6 +24,7 @@ primaryDC:
     readPort: 30012
     # The default writePort of primaryDC.
     writePort: 30013
+    imagePullSecretNames: []
     # specify compute and volume resources for mogdb pod.
     mogdb:
       resources:
@@ -60,6 +61,7 @@ standbyDCs:
       readPort: 30014
       # The default writePort of standbyDCs.
       writePort: 30015
+      imagePullSecretNames: []
       # specify compute and volume resources for mogdb pod.
       mogdb:
         resources:
@@ -111,9 +113,9 @@ templates:
     url: http://mogdb-ha.mogdb-ha.svc.cluster.local:6544
   # specify containers' names and imagePullPolicy
   images:
-    imagePullPolicy: IfNotPresent
-    mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
-    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+    imagePullPolicy: Always
+    mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb/mogdb:3.0.4
+    initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/init:dev.webhook
     exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0
 # specify config for rclone.
 rclone:

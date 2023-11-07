@@ -5,9 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "install.labels" . | indent 4 }}
-    {{- if .Values.labels }}
-    {{- toYaml .Values.labels | nindent 4 }}
-    {{- end }}
   {{- if .Values.annotations }}
   annotations:
   {{- toYaml .Values.annotations | nindent 4 }}
@@ -23,7 +20,10 @@ spec:
         replicas: {{ .Values.primaryDC.spec.replica | default .Values.templates.replica }}
         readPort: {{ .Values.primaryDC.spec.readPort | default .Values.templates.service.readPort }}
         writePort: {{ .Values.primaryDC.spec.writePort | default .Values.templates.service.writePort }}
+        RcloneConfigMap: data-plane1-rclone
         podSpec:
+          imagePullSecrets:
+            - name: data-plane1-huawei-registry
           volumeSpec:
             persistentVolumeClaim:
               accessModes:
@@ -40,6 +40,12 @@ spec:
                 requests:
                   storage: {{ .Values.primaryDC.spec.mogdb.volume.backupVolumeSize | default .Values.templates.mogdb.volume.backupVolumeSize }}
               storageClassName: {{ .Values.primaryDC.spec.mogdb.volume.storageClass | default .Values.templates.mogdb.volume.storageClass }}
+          {{- if .Values.primaryDC.spec.imagePullSecretNames }}
+          imagePullSecrets:
+          {{- range .Values.primaryDC.spec.imagePullSecretNames }}
+            - name: {{ . | quote }}
+          {{- end }}{{/* range */}}
+          {{- end }}{{/* define */}}
           {{- if .Values.primaryDC.spec.mogdb.resources }}
           resources:
           {{- toYaml .Values.primaryDC.spec.mogdb.resources | nindent 12 }}
@@ -62,7 +68,10 @@ spec:
         replicas: {{ .spec.replica | default $.Values.templates.replica }}
         readPort: {{ .spec.readPort | default $.Values.templates.service.readPort }}
         writePort: {{ .spec.writePort | default $.Values.templates.service.writePort }}
+        RcloneConfigMap: data-plane2-rclone
         podSpec:
+          imagePullSecrets:
+            - name: data-plane2-huawei-registry
           volumeSpec:
             persistentVolumeClaim:
               accessModes:
@@ -79,6 +88,12 @@ spec:
                 requests:
                   storage: {{ .spec.mogdb.volume.backupVolumeSize | default $.Values.templates.mogdb.volume.backupVolumeSize }}
               storageClassName: {{ .spec.mogdb.volume.storageClass | default $.Values.templates.mogdb.volume.storageClass }}
+          {{- if .spec.imagePullSecretNames }}
+          imagePullSecrets:
+          {{- range .spec.imagePullSecretNames }}
+            - name: {{ . | quote }}
+          {{- end }}{{/* range */}}
+          {{- end }}{{/* define */}}
           {{- if .spec.mogdb.resources }}
           resources:
           {{- toYaml .spec.mogdb.resources | nindent 12 }}

@@ -1,13 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "install.haName" . }}
   namespace: {{ .Release.Namespace }}
+  name: {{ include "install.haName" . }}
   labels:
     {{- include "install.labels" . | indent 4 }}
-    {{- if .Values.labels }}
-    {{- toYaml .Values.labels | nindent 4 }}
-    {{- end }}
   {{- if .Values.annotations }}
   annotations:
   {{- toYaml .Values.annotations | nindent 4 }}
@@ -22,9 +19,6 @@ spec:
     metadata:
       labels:
         {{- include "install.labels" . | indent 8 }}
-        {{- if .Values.labels }}
-        {{- toYaml .Values.labels | nindent 8 }}
-        {{- end }}
       {{- if .Values.annotations }}
       annotations:
       {{- toYaml .Values.annotations | nindent 8 }}

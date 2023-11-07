@@ -9,6 +9,8 @@ labels: {}
 # customize defination annotations.
 annotations: {}
 
+imagePullSecretNames: [mogdb-operator-huawei-registry]
+
 # specify compute and volume resources for mogdb pod.
 mogdb:
   resources:
@@ -21,11 +23,11 @@ mogdb:
       cpu: 500m
       memory: 1Gi
   volume:
-    # specify storage size for pod volume pvc. 
+    # specify storage size for pod volume pvc.
     dataVolumeSize: 1Gi
-    # specify storage size for pod backup pvc. 
+    # specify storage size for pod backup pvc.
     backupVolumeSize: 1Gi
-    # specify storageClassName for pod volume pvc and pod backup pvc. 
+    # specify storageClassName for pod volume pvc and pod backup pvc.
     storageClass: default
 
 # specify readPort and writePort for MogdbCluster.
@@ -41,8 +43,8 @@ ha:
 # specify containers' names and imagePullPolicy
 images:
   imagePullPolicy: IfNotPresent
-  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
-  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb:3.0.4
+  mogdbImage: swr.cn-north-4.myhuaweicloud.com/mogdb/mogdb:3.0.4
+  initImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/init:3.0.4-config
   exporterImage: swr.cn-north-4.myhuaweicloud.com/mogdb-cloud/mogdb-exporter:3.1.0
 
 # specify a backup job for mogdb

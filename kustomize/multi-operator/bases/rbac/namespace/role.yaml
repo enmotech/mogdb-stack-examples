@@ -21,6 +21,17 @@ rules:
       - batch
     resources:
       - cronjobs
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - batch
+    resources:
       - jobs
     verbs:
       - create
@@ -115,6 +126,32 @@ rules:
   - apiGroups:
       - mogdb.enmotech.io
     resources:
+      - mogdbdatabases
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbdatabases/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbdatabases/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
       - mogdbpodtemplates
     verbs:
       - create
@@ -124,6 +161,58 @@ rules:
       - patch
       - update
       - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbtables
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbtables/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbtables/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbusers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbusers/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - mogdbusers/status
+    verbs:
+      - get
+      - patch
+      - update
   - apiGroups:
       - mogdb.enmotech.io
     resources:
@@ -146,6 +235,84 @@ rules:
       - mogdb.enmotech.io
     resources:
       - multiclusters/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multidatabases
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multidatabases/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multidatabases/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multitables
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multitables/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multitables/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiusers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiusers/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - mogdb.enmotech.io
+    resources:
+      - multiusers/status
     verbs:
       - get
       - patch

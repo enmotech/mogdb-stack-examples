@@ -16,7 +16,7 @@ debug: false
 
 # to enable/disable webhook mod.
 webhookPort: 9443
-enableWebhook: true
+enableWebhook: false
 
 # to enable/disable leader election mod.
 enableLeaderElection: true

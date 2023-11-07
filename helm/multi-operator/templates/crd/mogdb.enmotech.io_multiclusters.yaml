@@ -55,12 +55,13 @@ spec:
                           description: Backup extra specification
                           properties:
                             auto:
+                              description: Auto is the scheduled auto backup spec. Only one of Auto and Manual can be selected.
                               properties:
                                 backupFileHistoryLimit:
                                   format: int32
                                   type: integer
                                 backupSchedules:
-                                  description: BackupSchedules defines a scheduled backup.
+                                  description: BackupSchedules defines the backup schedule. Full and Incremental backup types are supported
                                   properties:
                                     full:
                                       type: string
@@ -68,14 +69,19 @@ spec:
                                       type: string
                                   type: object
                                 backupType:
+                                  description: 'BackupType Support: dumpall, basebackup.'
+                                  enum:
+                                  - dumpall
+                                  - basebackup
                                   type: string
                                 failedJobsHistoryLimit:
                                   format: int32
                                   type: integer
-                                name:
-                                  description: The image name to use for gs_basebackup containers.
+                                id:
+                                  description: Id for this backup.
                                   type: string
                                 storageProvider:
+                                  description: StorageProvider is the storage spec for this backup. Only `rclone` is supported currently.
                                   properties:
                                     rcloneStorage:
                                       properties:
@@ -92,18 +98,24 @@ spec:
                                 suspend:
                                   type: boolean
                               required:
-                              - name
+                              - id
                               type: object
                             image:
                               type: string
                             manual:
+                              description: Manual is the single manual backup spec. Only one of Auto and Manual can be selected.
                               properties:
                                 backupType:
+                                  description: 'BackupType Support: dumpall, basebackup.'
+                                  enum:
+                                  - dumpall
+                                  - basebackup
                                   type: string
                                 id:
-                                  description: The image name to use for gs_basebackup containers.
+                                  description: Id for this backup.
                                   type: string
                                 storageProvider:
+                                  description: StorageProvider is the storage spec for this backup. Only `rclone` is supported currently.
                                   properties:
                                     rcloneStorage:
                                       properties:
@@ -122,10 +134,16 @@ spec:
                           description: DataSource defines the source of the MogDB data directory for a new MogDB cluster
                           properties:
                             backupType:
+                              description: 'BackupType the backup type. Support: dumpall, basebackup.'
+                              enum:
+                              - dumpall
+                              - basebackup
                               type: string
                             clusterName:
+                              description: ClusterName is the name of the data source cluster.
                               type: string
                             storageProvider:
+                              description: StorageProvider is the storage spec for this restore. Only `rclone` is supported currently.
                               properties:
                                 rcloneStorage:
                                   properties:
@@ -137,24 +155,32 @@ spec:
                                   type: object
                               type: object
                             target:
+                              description: Target to restore.
                               type: string
                             type:
+                              description: 'Type the restore type. Support: time, object.'
+                              enum:
+                              - time
+                              - object
                               type: string
                           type: object
                         ha:
                           properties:
                             scope:
+                              description: Scope is scope of this mogdb cluster.
                               type: string
                             url:
+                              description: URL is the url of the ha service.
                               type: string
                           type: object
                         hostNetwork:
-                          description: HostNetwork requested for mogdb pods. Use the host's network namespace. If this option is set, the ports that will be used must be specified. Default to false.
+                          description: HostNetwork Use the host's network namespace.
                           type: boolean
-                        ingressSpec:
-                          description: Ingress is the ingress specification for mogdb cluster
+                        ingress:
+                          description: Ingress is the ingress spec for cluster.
                           properties:
                             haProxy:
+                              description: HAProxy is the spec for ingress controller HAProxy.
                               properties:
                                 readPort:
                                   description: ReadPort Represents the service with read port.
@@ -191,6 +217,7 @@ spec:
                                   type: integer
                               type: object
                             nginx:
+                              description: Nginx is the spec for ingress controller Nginx.
                               properties:
                                 readPort:
                                   description: ReadPort Represents the service with read port.
@@ -3733,7 +3760,7 @@ spec:
                               type: array
                           type: object
                         postgresConf:
-                          description: A map[string]string that will be passed to file.
+                          description: PostgresConf is k-v pairs to describe the config of mogdb.
                           properties:
                             confPairs:
                               additionalProperties:
@@ -3743,7 +3770,7 @@ spec:
                           - confPairs
                           type: object
                         readPort:
-                          description: Represents the service with read port.
+                          description: ReadPort is the port of mogdb read service.
                           format: int32
                           type: integer
                         replicas:
@@ -3756,10 +3783,16 @@ spec:
                               description: DataSource defines the source of the MogDB data directory for a new MogDB cluster
                               properties:
                                 backupType:
+                                  description: 'BackupType the backup type. Support: dumpall, basebackup.'
+                                  enum:
+                                  - dumpall
+                                  - basebackup
                                   type: string
                                 clusterName:
+                                  description: ClusterName is the name of the data source cluster.
                                   type: string
                                 storageProvider:
+                                  description: StorageProvider is the storage spec for this restore. Only `rclone` is supported currently.
                                   properties:
                                     rcloneStorage:
                                       properties:
@@ -3771,8 +3804,13 @@ spec:
                                       type: object
                                   type: object
                                 target:
+                                  description: Target to restore.
                                   type: string
                                 type:
+                                  description: 'Type the restore type. Support: time, object.'
+                                  enum:
+                                  - time
+                                  - object
                                   type: string
                               type: object
                             image:
@@ -3780,8 +3818,6 @@ spec:
                               type: string
                             restoreId:
                               type: string
-                          required:
-                          - restoreId
                           type: object
                         stopped:
                           type: boolean
@@ -3814,16 +3850,22 @@ spec:
                                   type: string
                               type: object
                           type: object
-                        useTemplate:
+                        useTemplates:
                           description: UseTemplates list of `MogdbClusterTemplate` resource names which will merge with current `MogdbCluster` manifest.
                           items:
                             description: MogdbClusterUseTemplate defines UseTemplate section of MogdbCluster resource
                             properties:
                               mergeType:
+                                description: 'MergeType Support: override, fillempty'
+                                enum:
+                                - override
+                                - fillempty
                                 type: string
                               name:
+                                description: Name is the name of CR mogdbClusterTemplate.
                                 type: string
                               namespace:
+                                description: Namespace is the namespace of CR mogdbClusterTemplate.
                                 type: string
                             type: object
                           type: array
@@ -3978,7 +4020,7 @@ spec:
                               type: object
                           type: object
                         writePort:
-                          description: Represents the service with write port.
+                          description: WritePort is the port of mogdb write service.
                           format: int32
                           type: integer
                       type: object
@@ -4038,12 +4080,13 @@ spec:
                     description: Backup extra specification
                     properties:
                       auto:
+                        description: Auto is the scheduled auto backup spec. Only one of Auto and Manual can be selected.
                         properties:
                           backupFileHistoryLimit:
                             format: int32
                             type: integer
                           backupSchedules:
-                            description: BackupSchedules defines a scheduled backup.
+                            description: BackupSchedules defines the backup schedule. Full and Incremental backup types are supported
                             properties:
                               full:
                                 type: string
@@ -4051,14 +4094,19 @@ spec:
                                 type: string
                             type: object
                           backupType:
+                            description: 'BackupType Support: dumpall, basebackup.'
+                            enum:
+                            - dumpall
+                            - basebackup
                             type: string
                           failedJobsHistoryLimit:
                             format: int32
                             type: integer
-                          name:
-                            description: The image name to use for gs_basebackup containers.
+                          id:
+                            description: Id for this backup.
                             type: string
                           storageProvider:
+                            description: StorageProvider is the storage spec for this backup. Only `rclone` is supported currently.
                             properties:
                               rcloneStorage:
                                 properties:
@@ -4075,18 +4123,24 @@ spec:
                           suspend:
                             type: boolean
                         required:
-                        - name
+                        - id
                         type: object
                       image:
                         type: string
                       manual:
+                        description: Manual is the single manual backup spec. Only one of Auto and Manual can be selected.
                         properties:
                           backupType:
+                            description: 'BackupType Support: dumpall, basebackup.'
+                            enum:
+                            - dumpall
+                            - basebackup
                             type: string
                           id:
-                            description: The image name to use for gs_basebackup containers.
+                            description: Id for this backup.
                             type: string
                           storageProvider:
+                            description: StorageProvider is the storage spec for this backup. Only `rclone` is supported currently.
                             properties:
                               rcloneStorage:
                                 properties:
@@ -4105,10 +4159,16 @@ spec:
                     description: DataSource defines the source of the MogDB data directory for a new MogDB cluster
                     properties:
                       backupType:
+                        description: 'BackupType the backup type. Support: dumpall, basebackup.'
+                        enum:
+                        - dumpall
+                        - basebackup
                         type: string
                       clusterName:
+                        description: ClusterName is the name of the data source cluster.
                         type: string
                       storageProvider:
+                        description: StorageProvider is the storage spec for this restore. Only `rclone` is supported currently.
                         properties:
                           rcloneStorage:
                             properties:
@@ -4120,24 +4180,32 @@ spec:
                             type: object
                         type: object
                       target:
+                        description: Target to restore.
                         type: string
                       type:
+                        description: 'Type the restore type. Support: time, object.'
+                        enum:
+                        - time
+                        - object
                         type: string
                     type: object
                   ha:
                     properties:
                       scope:
+                        description: Scope is scope of this mogdb cluster.
                         type: string
                       url:
+                        description: URL is the url of the ha service.
                         type: string
                     type: object
                   hostNetwork:
-                    description: HostNetwork requested for mogdb pods. Use the host's network namespace. If this option is set, the ports that will be used must be specified. Default to false.
+                    description: HostNetwork Use the host's network namespace.
                     type: boolean
-                  ingressSpec:
-                    description: Ingress is the ingress specification for mogdb cluster
+                  ingress:
+                    description: Ingress is the ingress spec for cluster.
                     properties:
                       haProxy:
+                        description: HAProxy is the spec for ingress controller HAProxy.
                         properties:
                           readPort:
                             description: ReadPort Represents the service with read port.
@@ -4174,6 +4242,7 @@ spec:
                             type: integer
                         type: object
                       nginx:
+                        description: Nginx is the spec for ingress controller Nginx.
                         properties:
                           readPort:
                             description: ReadPort Represents the service with read port.
@@ -7716,7 +7785,7 @@ spec:
                         type: array
                     type: object
                   postgresConf:
-                    description: A map[string]string that will be passed to file.
+                    description: PostgresConf is k-v pairs to describe the config of mogdb.
                     properties:
                       confPairs:
                         additionalProperties:
@@ -7726,7 +7795,7 @@ spec:
                     - confPairs
                     type: object
                   readPort:
-                    description: Represents the service with read port.
+                    description: ReadPort is the port of mogdb read service.
                     format: int32
                     type: integer
                   replicas:
@@ -7739,10 +7808,16 @@ spec:
                         description: DataSource defines the source of the MogDB data directory for a new MogDB cluster
                         properties:
                           backupType:
+                            description: 'BackupType the backup type. Support: dumpall, basebackup.'
+                            enum:
+                            - dumpall
+                            - basebackup
                             type: string
                           clusterName:
+                            description: ClusterName is the name of the data source cluster.
                             type: string
                           storageProvider:
+                            description: StorageProvider is the storage spec for this restore. Only `rclone` is supported currently.
                             properties:
                               rcloneStorage:
                                 properties:
@@ -7754,8 +7829,13 @@ spec:
                                 type: object
                             type: object
                           target:
+                            description: Target to restore.
                             type: string
                           type:
+                            description: 'Type the restore type. Support: time, object.'
+                            enum:
+                            - time
+                            - object
                             type: string
                         type: object
                       image:
@@ -7763,8 +7843,6 @@ spec:
                         type: string
                       restoreId:
                         type: string
-                    required:
-                    - restoreId
                     type: object
                   stopped:
                     type: boolean
@@ -7797,16 +7875,22 @@ spec:
                             type: string
                         type: object
                     type: object
-                  useTemplate:
+                  useTemplates:
                     description: UseTemplates list of `MogdbClusterTemplate` resource names which will merge with current `MogdbCluster` manifest.
                     items:
                       description: MogdbClusterUseTemplate defines UseTemplate section of MogdbCluster resource
                       properties:
                         mergeType:
+                          description: 'MergeType Support: override, fillempty'
+                          enum:
+                          - override
+                          - fillempty
                           type: string
                         name:
+                          description: Name is the name of CR mogdbClusterTemplate.
                           type: string
                         namespace:
+                          description: Namespace is the namespace of CR mogdbClusterTemplate.
                           type: string
                       type: object
                     type: array
@@ -7961,7 +8045,7 @@ spec:
                         type: object
                     type: object
                   writePort:
-                    description: Represents the service with write port.
+                    description: WritePort is the port of mogdb write service.
                     format: int32
                     type: integer
                 type: object

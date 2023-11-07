@@ -27,11 +27,6 @@ spec:
         - name: operator
           image: {{ required "operator.image is required" .Values.operator.image | quote }}
           imagePullPolicy: {{ .Values.operator.imagePullPolicy }}
-          env:
-            - name: NAMESPACE
-              value: {{ .Release.Namespace }}
-            - name: CONTROL_PLANE
-              value: "{{ .Values.enableControl }}"
           {{- if .Values.enableWebhook }}
           ports:
             - protocol: TCP
@@ -48,6 +43,7 @@ spec:
             - "--debug={{ .Values.debug }}"
             - "--webhook-port={{ .Values.webhookPort }}"
             - "--enable-webhook={{ .Values.enableWebhook }}"
+            - "--enable-control={{ .Values.enableControl }}"
             - "--leader-elect={{ .Values.enableLeaderElection }}"
             - "--leader-election-id={{ .Values.leaderElectionID }}"
             - "--zap-time-encoding=iso8601"

@@ -20,7 +20,10 @@ spec:
         replicas: {{ .Values.primaryDC.spec.replica | default .Values.templates.replica }}
         readPort: {{ .Values.primaryDC.spec.readPort | default .Values.templates.service.readPort }}
         writePort: {{ .Values.primaryDC.spec.writePort | default .Values.templates.service.writePort }}
+        RcloneConfigMap: data-plane1-rclone
         podSpec:
+          imagePullSecrets:
+            - name: data-plane1-huawei-registry
           volumeSpec:
             persistentVolumeClaim:
               accessModes:
@@ -65,7 +68,10 @@ spec:
         replicas: {{ .spec.replica | default $.Values.templates.replica }}
         readPort: {{ .spec.readPort | default $.Values.templates.service.readPort }}
         writePort: {{ .spec.writePort | default $.Values.templates.service.writePort }}
+        RcloneConfigMap: data-plane2-rclone
         podSpec:
+          imagePullSecrets:
+            - name: data-plane2-huawei-registry
           volumeSpec:
             persistentVolumeClaim:
               accessModes:
